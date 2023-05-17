@@ -15,13 +15,63 @@ export default function ModalUsuario() {
                             </svg>
                         </button>
                     </div>
-                        <div>
-                            <p>usuarios</p>
-                        </div>
-                        <div>
-                            <p>Vehiculo</p>
+                       <div>
+                        {/* formulario con los datos */}
+                        <form className='flex flex-col'>
+                            <label htmlFor="">Nombre</label>
+                            <input type="text" 
+                            className='block w-full rounded-md border-0 py-1.5
+                            text-gray-900 shadow-sm ring-1 ring-inset
+                            ring-gray-300 placeholder:text-gray-400
+                                focus:ring-2 focus:ring-inset
+                            focus:ring-indigo-600 sm:text-sm sm:leading-6'/>
+                            <label htmlFor="">Apellido</label>
+                            <input type="text" 
+                            className='block w-full rounded-md border-0 py-1.5
+                            text-gray-900 shadow-sm ring-1 ring-inset
+                            ring-gray-300 placeholder:text-gray-400
+                                focus:ring-2 focus:ring-inset
+                            focus:ring-indigo-600 sm:text-sm sm:leading-6'/>
+                            <label htmlFor="">Cedula</label>
+                            <input type="text" 
+                            className='block w-full rounded-md border-0 py-1.5
+                            text-gray-900 shadow-sm ring-1 ring-inset
+                            ring-gray-300 placeholder:text-gray-400
+                                focus:ring-2 focus:ring-inset
+                            focus:ring-indigo-600 sm:text-sm sm:leading-6'/>
+                            <label htmlFor="">Correo</label>
+                            <input type="text" 
+                            className='block w-full rounded-md border-0 py-1.5
+                            text-gray-900 shadow-sm ring-1 ring-inset
+                            ring-gray-300 placeholder:text-gray-400
+                                focus:ring-2 focus:ring-inset
+                            focus:ring-indigo-600 sm:text-sm sm:leading-6'/>
+                            <label htmlFor="">Telefono</label>
+                            <input type="text"
+                            className='block w-full rounded-md border-0 py-1.5
+                            text-gray-900 shadow-sm ring-1 ring-inset
+                            ring-gray-300 placeholder:text-gray-400
+                                focus:ring-2 focus:ring-inset
+                            focus:ring-indigo-600 sm:text-sm sm:leading-6' />
+                            <label htmlFor="">Fecha de inicio</label>
+                            <label htmlFor="">
+                                28/01/2022
+                            </label>
+                            <label htmlFor="">Clientes</label>
+                            <label htmlFor="">
+                            20
+                            </label>
+                            <label htmlFor="">Cerrados</label>
+                            <label htmlFor="">
+                            7
+                            </label>
 
-                        </div>
+                            <input type="submit" value="Guardar cambios" className='w-full  bg-sky-500 rounded-md p-3 mt-5 text-white font-bold shadow hover:bg-sky-800 cursor-pointer '/>
+
+
+                        </form>
+
+                       </div>
                     </div>
                 
                 

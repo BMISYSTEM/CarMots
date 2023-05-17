@@ -1,14 +1,15 @@
 import React from 'react'
+import useBpsystem from '../hooks/useBpsystem'
 import BarraVertical from '../Graficas/BarraVertical'
 import Dona from '../Graficas/Dona'
 import Area from '../Graficas/Area'
 import HorizontalBarr from '../Graficas/HorizontalBarr'
 
 export default function Dashboard() {
-
+  const {modonoche,setModonoche} = useBpsystem()
   return (
     <>
-    <div className='w-auto h-auto bg-white flex lg:flex-row flex-col gap-2'>
+    <div className={` ${modonoche ? "bg-black text-white border-slate-800": "bg-white border-slate-200"} w-auto h-auto  flex lg:flex-row flex-col gap-2`}>
         {/* recuadros de informacion peque */}
         <div className='flex lg:flex-row flex-col w-full p-2'>
           {/* usuarios */}

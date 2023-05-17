@@ -13,6 +13,10 @@ import Transferencias from './OpctionNav/Transferencia'
 import Proveedor from './OpctionNav/Proveedor'
 import Recepcion from './OpctionNav/Recepcion'
 import Marcas from './OpctionNav/Submenus/Marcas'
+import Project from './OpctionNav/Project'
+import Vendidos from './OpctionNav/Submenus/Vendidos'
+import Pendientes from './OpctionNav/Submenus/Pendientes'
+import Aprobados from './OpctionNav/Submenus/Aprobados'
 
 const router = createBrowserRouter(
     [
@@ -40,8 +44,24 @@ const router = createBrowserRouter(
                     element: <Dashboard />
                 },
                 {
+                    path:'/panel/dashboard/vendidos',
+                    element: <Vendidos />
+                },
+                {
+                    path:'/panel/dashboard/pendientes',
+                    element: <Pendientes />
+                },
+                {
+                    path:'/panel/dashboard/aprobados',
+                    element: <Aprobados />
+                },
+                {
                     path:'/panel/administrador',
                     element: <Administrador/>
+                },
+                {
+                    path:'/panel/project',
+                    element: <Project/>
                 },
                 {
                     path:'/panel/Usuarios',

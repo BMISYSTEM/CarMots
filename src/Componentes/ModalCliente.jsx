@@ -2,11 +2,11 @@ import React from 'react'
 import useBpsystem from '../hooks/useBpsystem'
 
 export default function ModalCoptionente() {
-    const {componente,handleClickModalCliente} = useBpsystem()
+    const {componente,handleClickModalCliente,modonoche} = useBpsystem()
  
             return(
                 <>
-                    <div className='lg:w-auto w-screen h-screen lg:h-full bg-white bg-opacity-20 backdrop-blur-lg flex flex-col overflow-auto mb-32 lg:mb-0 lg:p-0 pb-24 pt-40 z-50 px-3'>
+                    <div className='lg:w-auto w-screen h-screen lg:h-full bg-opacity-20 backdrop-blur-lg flex flex-col overflow-auto mb-32 lg:mb-0 lg:p-0 pb-24 pt-40 z-50 px-3'>
                         <div className="flex justify-end items-end">
                             <button type="button"
                                     onClick={() => handleClickModalCliente()} className='hover:text-red-500'>

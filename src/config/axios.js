@@ -5,7 +5,6 @@ const clienteAxios = axios.create({
     Headers:{
         'Accept': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'multipart/form-data'
     },
     withCredentials:true
 });
