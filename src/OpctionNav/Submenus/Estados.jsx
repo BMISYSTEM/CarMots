@@ -1,33 +1,22 @@
-import { createRef } from 'react'
+import { useRef } from 'react'
 import useBpsystem from '../../hooks/useBpsystem'
 import { toast } from 'react-toastify'
 
-export default function Marcas() {
-  const {modonoche,mutate,marcas,marcasinsert,isLoading} = useBpsystem()
-  const marcar = createRef()
-  
-  const handleclick = (e) => {
-    e.preventDefault()
-    console.log(marcar.current.value)
-    const data = {
-      nombre : marcar.current.value}
-    marcasinsert(data)
-    toast.success("agregando marca...")
-  }
-  if(isLoading){
-    return(
-      <>
-          <div className='w-full  h-screen grid place-items-center '>
-            <img src="../../img/recatspiner.gif" alt="cargando..." />
-            <p>cargando...</p>
-          </div>
-          
-        </>
-    );
-  }
+export default function Estados() {
+    const {modonoche,estadoserror,createEstados,estadosall} = useBpsystem()
+    const estado = useRef()
+
+    const handleclick = (e) => {
+        e.preventDefault()
+        console.log(estado.current.value)
+        const data = {
+          nombre : estado.current.value}
+        // marcasinsert(data)
+        createEstados(data)
+        toast.success("agregando marca...")
+      }
   return (
     <>
-    
     <div className='flex flex-row w-auto h-full gap-3 '>
       {/* creacion de  */}
         <div className='w-full h-auto p-3'>
@@ -35,12 +24,12 @@ export default function Marcas() {
 
               {/* captura de datos para las marcas */}
               <form className='flex flex-col justify-center text-center items-center mt-5'
-              onSubmit={handleclick} >
-                <label htmlFor="">Nombre Marca</label>
+               onSubmit={handleclick}>
+                <label htmlFor="">Nombre Estado</label>
                 <input type="text" className={`${modonoche ? "bg-black text-white border-slate-800": "bg-white border-slate-200"}
                   flex text-center  w-1/2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                   placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
-                  ref={marcar}
+                  ref={estado}
                   />
                 <input type="submit" value={'Guardar'} className='bg-sky-500 rounded-md p-3 mt-5 text-white font-bold shadow hover:bg-sky-800 cursor-pointer'/>
               </form>
@@ -61,10 +50,10 @@ export default function Marcas() {
               <tbody>
                 
                   
-                    {marcas.marcas.map(row=>(
+                    {estadosall.estados.map(row=>(
                       <tr className=' text-center w-full  border-b-2 border-slate-200  hover:cursor-pointer text-sm'>
                         <td >{row['id']}</td>
-                        <td>{row['nombre']}</td>
+                        <td>{row['estado']}</td>
                         <td>
                             <p  className='flex flex-row text-center justify-center'>
                               <svg xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-white bg-sky-300 p-1 hover:bg-red-500 rounded-full">

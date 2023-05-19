@@ -1,48 +1,65 @@
-import { createRef } from 'react'
-import useBpsystem from '../../hooks/useBpsystem'
-import { toast } from 'react-toastify'
+import { useState,createRef } from 'react';
+import useBpsystem from '../../hooks/useBpsystem';
+import  useSWR  from 'swr';
+import clienteAxios from '../../conffig/axios';
+import { toast } from 'react-toastify';
 
-export default function Marcas() {
-  const {modonoche,mutate,marcas,marcasinsert,isLoading} = useBpsystem()
-  const marcar = createRef()
-  
-  const handleclick = (e) => {
+export default function Modelos() {
+    const {modonoche,createmodelos,loadingModelos,modelosdata,modeloserror,setModeloserror} = useBpsystem()
+    const [modelo,setModelo] = useState('')
+    const modelor = createRef()
+    const token = localStorage.getItem('TOKEN_USER')
+    console.log(modelosdata)
+const handleclik =  (e) =>{
     e.preventDefault()
-    console.log(marcar.current.value)
-    const data = {
-      nombre : marcar.current.value}
-    marcasinsert(data)
-    toast.success("agregando marca...")
-  }
-  if(isLoading){
-    return(
-      <>
-          <div className='w-full  h-screen grid place-items-center '>
+    const datos = {
+        year: modelo 
+    }
+     createmodelos(datos)
+    console.log(datos)
+    toast.success('guardando...')
+    
+}
+if(loadingModelos){
+    return (
+    <>
+            <div className='w-full  h-screen grid place-items-center '>
             <img src="../../img/recatspiner.gif" alt="cargando..." />
             <p>cargando...</p>
-          </div>
-          
+            </div>
         </>
     );
-  }
+    }
+    if (modeloserror?.response?.data?.errors) {
+    
+        let mensajes = []
+        mensajes = Object.values(modeloserror.response.data.errors)
+       
+        for (let index = 0; index < mensajes.length; index++) {
+          toast.error(mensajes[index][0])
+        }
+        
+
+        setModeloserror([])
+        
+      }
   return (
     <>
-    
     <div className='flex flex-row w-auto h-full gap-3 '>
       {/* creacion de  */}
         <div className='w-full h-auto p-3'>
           <div className='rounded-xl border-2 border-slate-200   w-full h-full'>
 
-              {/* captura de datos para las marcas */}
+              {/* captura de datos para los modelos */}
               <form className='flex flex-col justify-center text-center items-center mt-5'
-              onSubmit={handleclick} >
-                <label htmlFor="">Nombre Marca</label>
-                <input type="text" className={`${modonoche ? "bg-black text-white border-slate-800": "bg-white border-slate-200"}
+               onSubmit={handleclik}>
+                <label htmlFor="">Nombre Modelos</label>
+                <input type="number" min="1900" max="2999" onChange={e => setModelo(e.target.value)} className={`${modonoche ? "bg-black text-white border-slate-800": "bg-white border-slate-200"}
                   flex text-center  w-1/2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                   placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
-                  ref={marcar}
-                  />
-                <input type="submit" value={'Guardar'} className='bg-sky-500 rounded-md p-3 mt-5 text-white font-bold shadow hover:bg-sky-800 cursor-pointer'/>
+                  ref={modelor}/>
+                <input type="submit" value={'Guardar'}
+                className='bg-sky-500 rounded-md p-3 mt-5 text-white font-bold shadow hover:bg-sky-800 cursor-pointer'/>
               </form>
           </div>
         </div>
@@ -52,19 +69,19 @@ export default function Marcas() {
           {/* listado de las clases */}
           <table className='p-3 w-full overflow-auto'>
               <thead>
-                <tr className='w-full  border-b-2 border-slate-200 text-xl font-bold'>
+                <tr className='w-full text-xl font-bold border-b-2 border-slate-200 '>
                   <td >id</td>
-                  <td>nombre</td>
+                  <td>Modelo</td>
                   <td>Acciones</td>
                 </tr>
               </thead>
               <tbody>
                 
                   
-                    {marcas.marcas.map(row=>(
+                    {modelosdata.modelos.map(row=>(
                       <tr className=' text-center w-full  border-b-2 border-slate-200  hover:cursor-pointer text-sm'>
                         <td >{row['id']}</td>
-                        <td>{row['nombre']}</td>
+                        <td>{row['year']}</td>
                         <td>
                             <p  className='flex flex-row text-center justify-center'>
                               <svg xmlns="http://www.w3.org/2000/svg"  fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 text-white bg-sky-300 p-1 hover:bg-red-500 rounded-full">

@@ -4,6 +4,8 @@ import { useAuth } from '../hooks/useAuth'
 import { toast } from 'react-toastify'
 import React from 'react'
 import { Link,useNavigate} from 'react-router-dom'
+import spliter from '../../public/img/recatspiner.gif'
+import logo from '../../public/img/L-SYPROD.png'
 
 export default function Aside() {
   
@@ -33,7 +35,7 @@ export default function Aside() {
     return (
           <>
           <div className='w-1/5  h-screen grid place-items-center '>
-            <img src="../img/recatspiner.gif" alt="cargando..." />
+            <img src={spliter} alt="cargando..." />
             <p>cargando menu...</p>
           </div>
           
@@ -74,21 +76,25 @@ export default function Aside() {
             </div>
           {/* MENU DASHBOARD */}
           {dashboard ? 
+              <Link to={'/panel/dashboard'}>
               <div 
                     className={`flex ${barraTitulos ? "":"md:justify-center "}  rounded-xl gap-2 p-2 m-2 w-auto hover:bg-slate-300 hover:text-indigo-600`} 
                     onClick={()=> {
                         setSubmenuDashboard(!submenuDasboard)
                       }}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round"
-                  d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 
-                  1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                  </svg>
-                  <span className={`${barraTitulos ? "": "md:hidden"} `}>
-                    <Link to={'/panel/dashboard'}>Dashboard</Link>
-                  </span>
+                   
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                      <path strokeLinecap="round" strokeLinejoin="round"
+                      d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 
+                      1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                      </svg>
+                      <span className={`${barraTitulos ? "": "md:hidden"} `}>
+                        Dashboard
+                      </span>
+                   
               </div>
+                  </Link>
           : 
           ""}
           {/* submenu */}
@@ -103,6 +109,7 @@ export default function Aside() {
               <Link >Aprobados</Link>
             </div>
           </div>
+          <Link to={'/panel/project'}>
           <div className={` flex ${barraTitulos ? "":"md:justify-center"} rounded-xl gap-2 p-2 m-2 w-auto hover:bg-slate-300 hover:text-indigo-600`}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
@@ -111,48 +118,54 @@ export default function Aside() {
             <span className={`
             
             ${barraTitulos ? "": "md:hidden"} `}>
-              <Link to={'/panel/project'}>Project</Link>
+              Project
             </span>
           </div>
+          </Link>
           {/* MENU ADMINISTRADOR */}
           {administrador ? 
+          <Link to={'/panel/administrador'}>
             <div className={`flex ${barraTitulos ? "":"md:justify-center"} rounded-xl gap-2 p-2 m-2 w-auto hover:bg-slate-300 hover:text-indigo-600`}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
               <span className={`
               ${barraTitulos ? "": "md:hidden"} `}>
-                <Link to={'/panel/administrador'}>Administrador</Link>
+                Administrador
               </span>
             </div>
+            </Link>
           : ""}
           {/* MENU USUARIOS */}
           {usuarios ? 
+          <Link to={'/panel/usuarios'}>
               <div className={`flex ${barraTitulos ? "":"md:justify-center"}  rounded-xl gap-2 p-2 m-2 w-auto hover:bg-slate-300 hover:text-indigo-600`} >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
                 </svg>
                 <span className={`${barraTitulos ? "": "md:hidden"} `}>
-                  <Link to={'/panel/usuarios'}>Ususarios</Link>
+                  Ususarios
                 </span>
               </div>
+              </Link>
           : ""}
           {recepcion ? 
-          
+          <Link to={'/panel/recepcion'}>
             <div className={`flex ${barraTitulos ? "":"md:justify-center"} rounded-xl gap-2 p-2 m-2 w-auto hover:bg-slate-300 hover:text-indigo-600`} >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
               </svg>
               <span className={`${barraTitulos ? "": "md:hidden"} `}>
-                <Link to={'/panel/recepcion'}>Recepcion</Link>
+                Recepcion
               </span>
             </div>
+            </Link>
           : ""}
           {/* MENU AJUSTES */}
           {ajustes ? 
             <div className={` 
             
-            flex ${barraTitulos ? "":"md:justify-center"} rounded-xl gap-2 p-2 m-2 w-auto hover:bg-slate-300 hover:text-indigo-600`} 
+            flex ${barraTitulos ? "":"md:justify-center"} rounded-xl gap-2 p-2 m-2 w-auto hover:bg-slate-300 hover:cursor-pointer hover:text-indigo-600`} 
                   onClick={()=> {
                       setSubmenuAjuste(!submenuAjuste)
                     }}>
@@ -169,7 +182,7 @@ export default function Aside() {
             </div>
           : ""}
           {ajustes ? 
-            <div className={`${submenuAjuste ? "hidden" : barraTitulos ? "" :"hidden"} flex flex-col w-auto text-center gap-1`} id='submenu' >
+            <div className={`${submenuAjuste ? "hidden" : barraTitulos ? "" :"hidden"} hover:cursor-pointer flex flex-col w-auto text-center gap-1`} id='submenu' >
               <div className='my-1 font-sans hover:bg-slate-300 hover:text-indigo-600 cursor-pointer mx-6'>
                 <Link to={'/panel/ajustes/marcas'}>Marcas</Link>
               </div>
@@ -177,10 +190,10 @@ export default function Aside() {
                 <Link to={'/panel/ajustes/modelos'}>Modelos</Link>
               </div>
               <div className='my-1 font-sans hover:bg-slate-300 hover:text-indigo-600 cursor-pointer mx-6'>
-                <Link to={'/panel/ajustes/vehiculos'}>Vehiculos</Link>
+                <Link to={'/panel/ajustes/estados'}>Estados</Link>
               </div>
               <div className='my-1 font-sans hover:bg-slate-300 hover:text-indigo-600 cursor-pointer mx-6'>
-                <Link to={'/panel/ajustes/estados'}>Estados</Link>
+                <Link to={'/panel/ajustes/vehiculos'}>Vehiculos</Link>
               </div>
               <div className='my-1 font-sans hover:bg-slate-300 hover:text-indigo-600 cursor-pointer mx-6'>
                 <Link to={'/panel/ajustes/financieras'}>Financieras</Link>
@@ -192,6 +205,7 @@ export default function Aside() {
           : ""}
           {/* MENU CAMPAÑAS */}
           {campanas ? 
+          <Link to={'/panel/campanas'}>
             <div className={`
             
             flex ${barraTitulos ? "":"md:justify-center"} rounded-xl gap-2 p-2 m-2 w-auto hover:bg-slate-300 hover:text-indigo-600`} >
@@ -200,12 +214,14 @@ export default function Aside() {
               </svg>
 
               <span className={`${barraTitulos ? "": "md:hidden"} `}>
-                <Link to={'/panel/campanas'}>Campañas</Link>
+                Campañas
               </span>
             </div>
+            </Link>
           : ""}
           {/* MENU CONTABILIDAD */}
           {contabilidad ? 
+          <Link to={'/panel/contabilidad'}>
             <div className={` 
             
             flex ${barraTitulos ? "":"md:justify-center"} rounded-xl gap-2 p-2 m-2 w-auto hover:bg-slate-300 hover:text-indigo-600`} >
@@ -213,12 +229,14 @@ export default function Aside() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008zm0 2.25h.008v.008H8.25V13.5zm0 2.25h.008v.008H8.25v-.008zm0 2.25h.008v.008H8.25V18zm2.498-6.75h.007v.008h-.007v-.008zm0 2.25h.007v.008h-.007V13.5zm0 2.25h.007v.008h-.007v-.008zm0 2.25h.007v.008h-.007V18zm2.504-6.75h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V13.5zm0 2.25h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V18zm2.498-6.75h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V13.5zM8.25 6h7.5v2.25h-7.5V6zM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 002.25 2.25h10.5a2.25 2.25 0 002.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0012 2.25z" />
               </svg>
               <span className={`${barraTitulos ? "": "md:hidden"} `}>
-                <Link to={'/panel/contabilidad'}>Centro financiero</Link>
+                Centro financiero
               </span>
             </div>
+            </Link>
           : ""}
           {/* MENU TRENSFERENCIAS */}
           {transferencias ? 
+          <Link to={'/panel/transferencia'}>
             <div className={` 
             
             flex ${barraTitulos ? "":"md:justify-center"} rounded-xl gap-2 p-2 m-2 w-auto hover:bg-slate-300 hover:text-indigo-600`} >
@@ -226,13 +244,14 @@ export default function Aside() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span className={`${barraTitulos ? "": "md:hidden"} `}>
-                <Link to={'/panel/transferencia'}>Transferencias</Link>
+                Transferencias
               </span>
             </div>
-          
+            </Link>
           : ""}
           {/* MENU PROVEEDOR */}
           {proveedor ? 
+           <Link to={'/panel/proveedor'}>
             <div className={` 
             
             flex ${barraTitulos ? "":"md:justify-center"} rounded-xl gap-2 p-2 m-2 w-auto hover:bg-slate-300 hover:text-indigo-600`} >
@@ -240,14 +259,15 @@ export default function Aside() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.275-4.835M15.75 9c0 .896-.393 1.7-1.016 2.25" />
               </svg>
               <span className={`${barraTitulos ? "": "md:hidden"} `}>
-                <Link to={'/panel/proveedor'}>Provedor</Link>
+               Provedor
               </span>
             </div>
+            </Link>
           : ""}
           <div className='w-auto h-auto flex items-center justify-center' onClick={()=>{
             cerrarsession()}}>
             <img 
-                src="../img/L-SYPROD.png" 
+                src={logo} 
                 alt="Logo syprod creadores del sistema" 
                 className='w-16 p-0 m-0 h-16 '/>
           </div>

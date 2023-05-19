@@ -22,6 +22,7 @@ const customStyles = {
 };
 Modal.setAppElement('#root')
 export default function Panel() {
+  const nombreImage = localStorage.getItem('img')
   const url = import.meta.env.VITE_API_URL
 
   //estado del menu segun usuario 
@@ -31,8 +32,19 @@ export default function Panel() {
   const {user,error,datapermisos,permisosuser} = useAuth({middleware:'auth'})
   const [inicial,setInicial] =useState(0)
   const [permiso,setpermiso] =useState([])
-  const {clienteModal,usuariosModal,modonoche,setModonoche,permisos:p} = useBpsystem()
- console.log(user)
+  const {clienteModal,usuariosModal,modonoche,setModonoche,permisos:p,loadingModelos,
+    isLoading,estadosloading} = useBpsystem()
+    if(loadingModelos || isLoading || estadosloading){
+      return (
+        <>
+                <div className='w-full  h-screen grid place-items-center '>
+                <img src="../../img/recatspiner.gif" alt="cargando..." />
+                <p>cargando...</p>
+                </div>
+            </>
+        );
+    }
+//  console.log(user.img)
   return (
     <>
       <div className={`${modonoche ? "bg-black text-white border-slate-800": "bg-white border-slate-200"} flex md:flex-row flex-col h-screen w-auto overflow-hidden`}>
@@ -63,7 +75,7 @@ export default function Panel() {
                      
                 </div>
                 <div className='rounded-full border-2  w-12 h-12 '>
-                    <img src={url+"/storage/"+user.img} className='rounded-full  w-12 h-12 ' alt="pefil" />
+                    <img src={url+"/storage/"+ nombreImage} className='rounded-full  w-12 h-12 ' alt="pefil" />
                 </div>
             </div>
           </header>

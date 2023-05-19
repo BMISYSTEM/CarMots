@@ -9,7 +9,7 @@ export const useAuth = ({middleware,url}) =>
 {
 
     //informacion del token 
-    // const [usuario,setUsuario] = useState()
+    // const [isLoadingP,setp] = useState()
     const token = localStorage.getItem('TOKEN_USER');
     const navigate = useNavigate();
     const datapermisos = [];
@@ -33,7 +33,6 @@ export const useAuth = ({middleware,url}) =>
     {
         try {
             const {data} = await clienteAxios.post('api/login/',datos)
-            
             await per(data)
             await permisosuser(setpermisos)
             // await permisosuser(setPermisos)
@@ -49,10 +48,9 @@ export const useAuth = ({middleware,url}) =>
     }
     const  per = async (data) =>{
       localStorage.setItem('TOKEN_USER',data.token)
-      localStorage.setItem('imgperfil',data.imagen)
+      localStorage.setItem('img',data.user.img)
     }
     const permisosuser = async(setpermisos) => {
-        console.log("desde permisos"+ token)
         
             try {
     

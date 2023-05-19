@@ -17,6 +17,9 @@ import Project from './OpctionNav/Project'
 import Vendidos from './OpctionNav/Submenus/Vendidos'
 import Pendientes from './OpctionNav/Submenus/Pendientes'
 import Aprobados from './OpctionNav/Submenus/Aprobados'
+import Modelos from './OpctionNav/Submenus/Modelos'
+import Vehiculos from './OpctionNav/Submenus/Vehiculos'
+import Estados from './OpctionNav/Submenus/Estados'
 
 const router = createBrowserRouter(
     [
@@ -73,15 +76,15 @@ const router = createBrowserRouter(
                 },
                 {
                     path:'/panel/ajustes/modelos',
-                    element: <Ajustes/>
+                    element: <Modelos />
                 },
                 {
                     path:'/panel/ajustes/vehiculos',
-                    element: <Ajustes/>
+                    element: <Vehiculos/>
                 },
                 {
                     path:'/panel/ajustes/estados',
-                    element: <Ajustes/>
+                    element: <Estados/>
                 },
                 {
                     path:'/panel/ajustes/financieras',
