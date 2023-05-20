@@ -7,6 +7,7 @@ import ModalCliente from '../Componentes/ModalCliente'
 import ModalUsuario from '../Componentes/ModalUsuario'
 import { useAuth } from '../hooks/useAuth'
 import { ToastContainer } from 'react-toastify'
+import ModalVehiculos from '../Componentes/ModalVehiculos'
 
 
 
@@ -18,6 +19,20 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
+    
+  },
+};
+const customStyles2 = {
+  content: {
+    top: '20%',
+    left: '100%',
+    right: '100%',
+    bottom: '20%',
+    marginRight: '-150%',
+    with:'100%',
+    heigt:'100%',
+    transform: 'translate(-50%, -50%)',
+    
   },
 };
 Modal.setAppElement('#root')
@@ -33,7 +48,7 @@ export default function Panel() {
   const [inicial,setInicial] =useState(0)
   const [permiso,setpermiso] =useState([])
   const {clienteModal,usuariosModal,modonoche,setModonoche,permisos:p,loadingModelos,
-    isLoading,estadosloading} = useBpsystem()
+    isLoading,estadosloading,vehiculosModal} = useBpsystem()
     if(loadingModelos || isLoading || estadosloading){
       return (
         <>
@@ -90,6 +105,10 @@ export default function Panel() {
       </Modal>
       <Modal isOpen={usuariosModal} style={customStyles}>
           <ModalUsuario />
+      </Modal>
+      <ToastContainer />
+      <Modal isOpen={vehiculosModal} className={'w-full h-full grid place-items-center'}>
+          <ModalVehiculos  />
       </Modal>
       <ToastContainer />
      

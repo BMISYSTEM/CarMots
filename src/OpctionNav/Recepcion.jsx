@@ -2,7 +2,7 @@ import React from 'react'
 import useBpsystem from '../hooks/useBpsystem'
 
 export default function Recepcion() {
-  const {modonoche} = useBpsystem()
+  const {modonoche,handleClickModalVehiculos} = useBpsystem()
   return (
     <>
       <div className={`${modonoche ? "bg-black text-white border-slate-800": "bg-white border-slate-200"}
@@ -96,12 +96,11 @@ export default function Recepcion() {
                 </div>
                 <div className={`${modonoche ? "bg-black text-white border-slate-800": "bg-white border-slate-200"} 
                 h-auto md:w-1/3 w-full  m-1 rounded-xl flex flex-col gap-2 p-2 font-bold border-solid border-2 border-slate-200`}>
-                  <select name="" id="" className='border-none text-slate-600 rounded-lg text-center'>
-                    <option value="">Vehiculo</option>
-                    <option value="">Chevrolet</option>
-                    <option value="">Jeep</option>
-                    <option value="">KIA</option>
-                  </select>
+                  <button 
+                  onClick={()=> handleClickModalVehiculos()}
+                  className='bg-sky-500 rounded-md p-3 mt-5 text-white font-bold shadow hover:bg-sky-800 cursor-pointer'>
+                    Seleccionar vehiculo
+                    </button>
                     <p>PLACA:####</p>
                     <p>kILOMETRAJE:####</p>
                     <p>MACA:####</p>

@@ -9,6 +9,7 @@ const BpsystemProvider = ({children}) =>{
   const token = localStorage.getItem('TOKEN_USER')
   const [clienteModal,setclienteModal] = useState(false)
   const [usuariosModal,setusuariosModal] = useState(false)
+  const [vehiculosModal,setVehiculosModal] = useState(false)
   const [permisos,setPermisos] = useState([])
   const [componente,setComponente] = useState('')
   const [modeloserror,setModeloserror] = useState('')
@@ -27,6 +28,9 @@ const BpsystemProvider = ({children}) =>{
   }
   const handleClickModalUsuario = () =>{
     setusuariosModal(!usuariosModal)
+  }
+  const handleClickModalVehiculos = () =>{
+    setVehiculosModal(!vehiculosModal)
   }
 
 
@@ -181,7 +185,9 @@ const BpsystemProvider = ({children}) =>{
           // vehiculosall,
           // vehiculoserrores,
           // vehiculosloading,
-          createVehiculos
+          createVehiculos,
+          handleClickModalVehiculos,
+          vehiculosModal
         }}
     >{children}</BpsystemContext.Provider>
 )
