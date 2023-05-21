@@ -3,7 +3,7 @@ import useBpsystem from '../../hooks/useBpsystem'
 import { toast } from 'react-toastify'
 
 export default function Marcas() {
-  const {modonoche,mutate,marcas,marcasinsert,isLoading} = useBpsystem()
+  const {modonoche,marcas,marcasinsert,isLoading} = useBpsystem()
   const marcar = createRef()
   
   const handleclick = (e) => {

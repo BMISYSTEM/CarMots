@@ -2,8 +2,21 @@ import React from 'react'
 import useBpsystem from '../hooks/useBpsystem'
 
 export default function ModalVehiculos() {
+  const url = import.meta.env.VITE_API_URL
 
-    const {handleClickModalVehiculos,modonoche} = useBpsystem()
+    const {handleClickModalVehiculos,modonoche,vehiculosall,vehiculosloading} = useBpsystem()
+
+    console.log(vehiculosall.map(ve=>ve['marcas']))
+
+    if (vehiculosloading)
+    {
+        return (
+            <>
+            <h1>Cargando...</h1>
+            
+            </>
+        )
+    }
   return (
     <div className= {`${modonoche ? "bg-black text-white":"bg-white text-slate-600" } mr-64w-full h-full m-0  rounded-xl  flex flex-col gap-2 p-5  absolute`}>
         <div className="flex justify-end">
@@ -46,134 +59,34 @@ export default function ModalVehiculos() {
         {/* contenedor de imagenes */}
        <div className='grid grid-cols-3 gap-2 text-center rounded-xl  mt-4  overflow-auto'>
             {/* contenedor 1 */}
-            <div className=' w-auto h-auto flex flex-col rounded-xl shadow-xl'>
+            {vehiculosall.map(vehiculo=>
+                <div className=' w-auto h-auto flex flex-col rounded-xl shadow-xl'>
                 <div className='w-64 h-auto '>
-                    <img src="../img/imagencarro.png"  className='rounded-xl shadow-xl' alt="" />
+                    <img src={url+"/storage/vehiculos/"+ vehiculo['foto1']} className='rounded-xl shadow-xl' alt="" />
                 </div>
                 <div className='mb-0'>
                     <p className='font-bold text-xl'>Marca</p>
-                    <p>Chevrolet</p>
+                    <p>{vehiculo['marcas']}</p>
                     <p className='font-bold text-xl'>Modelo</p>
-                    <p>2017</p>
+                    <p>{vehiculo['modelos']}</p>
                     <p className='font-bold text-xl'>Estado</p>
-                    <p>Nuevo</p>
+                    <p>{vehiculo['estados']}</p>
                     <p className='font-bold text-xl'>Valor</p>
-                    <p>$25.000.000</p>
+                    <p>{vehiculo['valor']}</p>
                     <button 
-                  onClick={()=> handleClickModalVehiculos()}
-                  className='bg-sky-500 rounded-md p-3 mt-5 text-white font-bold shadow hover:bg-sky-800 cursor-pointer mb-2'>
+                onClick={()=> handleClickModalVehiculos()}
+                className='bg-sky-500 rounded-md p-3 mt-5 text-white font-bold shadow hover:bg-sky-800 cursor-pointer mb-2'>
                     Seleccionar vehiculo
                     </button>
                 </div>
-            </div>
-            {/* contenedor 1 */}
-            <div className=' w-auto h-auto flex flex-col rounded-xl shadow-xl'>
-                <div className='w-64 h-auto '>
-                    <img src="../img/imagencarro.png"  className='rounded-xl shadow-xl' alt="" />
                 </div>
-                <div className='mb-0'>
-                    <p className='font-bold text-xl'>Marca</p>
-                    <p>Chevrolet</p>
-                    <p className='font-bold text-xl'>Modelo</p>
-                    <p>2017</p>
-                    <p className='font-bold text-xl'>Estado</p>
-                    <p>Nuevo</p>
-                    <p className='font-bold text-xl'>Valor</p>
-                    <p>$25.000.000</p>
-                    <button 
-                  onClick={()=> handleClickModalVehiculos()}
-                  className='bg-sky-500 rounded-md p-3 mt-5 text-white font-bold shadow hover:bg-sky-800 cursor-pointer mb-2'>
-                    Seleccionar vehiculo
-                    </button>
-                </div>
-            </div>
-            {/* contenedor 1 */}
-            <div className=' w-auto h-auto flex flex-col rounded-xl shadow-xl'>
-                <div className='w-64 h-auto '>
-                    <img src="../img/imagencarro.png"  className='rounded-xl shadow-xl' alt="" />
-                </div>
-                <div className='mb-0'>
-                    <p className='font-bold text-xl'>Marca</p>
-                    <p>Chevrolet</p>
-                    <p className='font-bold text-xl'>Modelo</p>
-                    <p>2017</p>
-                    <p className='font-bold text-xl'>Estado</p>
-                    <p>Nuevo</p>
-                    <p className='font-bold text-xl'>Valor</p>
-                    <p>$25.000.000</p>
-                    <button 
-                  onClick={()=> handleClickModalVehiculos()}
-                  className='bg-sky-500 rounded-md p-3 mt-5 text-white font-bold shadow hover:bg-sky-800 cursor-pointer mb-2'>
-                    Seleccionar vehiculo
-                    </button>
-                </div>
-            </div>
-            {/* contenedor 1 */}
-            <div className=' w-auto h-auto flex flex-col rounded-xl shadow-xl'>
-                <div className='w-64 h-auto '>
-                    <img src="../img/imagencarro.png"  className='rounded-xl shadow-xl' alt="" />
-                </div>
-                <div className='mb-0'>
-                    <p className='font-bold text-xl'>Marca</p>
-                    <p>Chevrolet</p>
-                    <p className='font-bold text-xl'>Modelo</p>
-                    <p>2017</p>
-                    <p className='font-bold text-xl'>Estado</p>
-                    <p>Nuevo</p>
-                    <p className='font-bold text-xl'>Valor</p>
-                    <p>$25.000.000</p>
-                    <button 
-                  onClick={()=> handleClickModalVehiculos()}
-                  className='bg-sky-500 rounded-md p-3 mt-5 text-white font-bold shadow hover:bg-sky-800 cursor-pointer mb-2'>
-                    Seleccionar vehiculo
-                    </button>
-                </div>
-            </div>
-            {/* contenedor 1 */}
-            <div className=' w-auto h-auto flex flex-col rounded-xl shadow-xl'>
-                <div className='w-64 h-auto '>
-                    <img src="../img/imagencarro.png"  className='rounded-xl shadow-xl' alt="" />
-                </div>
-                <div className='mb-0'>
-                    <p className='font-bold text-xl'>Marca</p>
-                    <p>Chevrolet</p>
-                    <p className='font-bold text-xl'>Modelo</p>
-                    <p>2017</p>
-                    <p className='font-bold text-xl'>Estado</p>
-                    <p>Nuevo</p>
-                    <p className='font-bold text-xl'>Valor</p>
-                    <p>$25.000.000</p>
-                    <button 
-                  onClick={()=> handleClickModalVehiculos()}
-                  className='bg-sky-500 rounded-md p-3 mt-5 text-white font-bold shadow hover:bg-sky-800 cursor-pointer mb-2'>
-                    Seleccionar vehiculo
-                    </button>
-                </div>
-            </div>
-            {/* contenedor 1 */}
-            <div className=' w-auto h-auto flex flex-col rounded-xl shadow-xl'>
-                <div className='w-64 h-auto '>
-                    <img src="../img/imagencarro.png"  className='rounded-xl shadow-xl' alt="" />
-                </div>
-                <div className='mb-0'>
-                    <p className='font-bold text-xl'>Marca</p>
-                    <p>Chevrolet</p>
-                    <p className='font-bold text-xl'>Modelo</p>
-                    <p>2017</p>
-                    <p className='font-bold text-xl'>Estado</p>
-                    <p>Nuevo</p>
-                    <p className='font-bold text-xl'>Valor</p>
-                    <p>$25.000.000</p>
-                    <button 
-                  onClick={()=> handleClickModalVehiculos()}
-                  className='bg-sky-500 rounded-md p-3 mt-5 text-white font-bold shadow hover:bg-sky-800 cursor-pointer mb-2'>
-                    Seleccionar vehiculo
-                    </button>
-                </div>
+            )}
+           
+           
             </div>
 
 
-       </div>
+       
     </div>
   )
 }
