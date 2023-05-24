@@ -1,15 +1,26 @@
-import React from 'react'
+import { useRef, useState } from 'react'
 import useBpsystem from '../hooks/useBpsystem'
+import { json } from 'react-router-dom'
 
 export default function ModalCoptionente() {
-    const {componente,handleClickModalCliente,modonoche} = useBpsystem()
- 
+    const {componente,handleClickModalCliente,modonoche,clienteseleccionado,clientesall,estadosall,marcas,modelosdata} = useBpsystem()
+    const cliente = Object.values(clientesall?.data?.data?.filter(clientes => clientes.id == clienteseleccionado)) 
+    const marcavehiculo = marcas?.marcas.filter(marcas => marcas.id === cliente[0]?.vehiculo?.marcas)
+    const modelo = modelosdata?.modelos.filter(modelos => modelos.id === cliente[0]?.vehiculo?.modelos)
+    const nombre = useRef()
+    const apellido = useRef()
+    const telefono = useRef()
+    const email = useRef()
+    const comentario = useRef()
+    const estadonuevo = useRef()
+    
+    
             return(
                 <>
                     <div className='lg:w-auto w-screen h-screen lg:h-full bg-opacity-20 backdrop-blur-lg flex flex-col overflow-auto mb-32 lg:mb-0 lg:p-0 pb-24 pt-40 z-50 px-3'>
                         <div className="flex justify-end items-end">
                             <button type="button"
-                                    onClick={() => handleClickModalCliente()} className='hover:text-red-500'>
+                                    onClick={() => handleClickModalCliente(clienteseleccionado)} className='hover:text-red-500'>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                 <path strokeoptionnecap="round" strokeoptionnejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
@@ -18,74 +29,41 @@ export default function ModalCoptionente() {
                         <div className='flex lg:flex-row flex-col gap-5 h-auto mt-12 '>
                             <div>
                                 <h1 className='text-xl font-bold text-slate-800 m-2 text-center'>Cliente</h1>
-                                <form >
-                                    <label htmlFor="">Nombre</label>
-                                    <input type="text"
-                                            className='block w-full rounded-md border-0 py-1.5
-                                            text-gray-900 shadow-sm ring-1 ring-inset
-                                            ring-gray-300 placeholder:text-gray-400
-                                                focus:ring-2 focus:ring-inset
-                                            focus:ring-indigo-600 sm:text-sm sm:leading-6' />
-                                    <label htmlFor="">Apellidos</label>
-                                    <input type="text" 
-                                            className='block w-full rounded-md border-0 py-1.5
-                                            text-gray-900 shadow-sm ring-1 ring-inset
-                                            ring-gray-300 placeholder:text-gray-400
-                                                focus:ring-2 focus:ring-inset
-                                            focus:ring-indigo-600 sm:text-sm sm:leading-6'/>
-                                    <label htmlFor="">Teleforno</label>
-                                    <input type="text" 
-                                            className='block w-full rounded-md border-0 py-1.5
-                                            text-gray-900 shadow-sm ring-1 ring-inset
-                                            ring-gray-300 placeholder:text-gray-400
-                                                focus:ring-2 focus:ring-inset
-                                            focus:ring-indigo-600 sm:text-sm sm:leading-6'/>
-                                    <label htmlFor="">Correo</label>
-                                    <input type="text"
-                                            className='block w-full rounded-md border-0 py-1.5
-                                            text-gray-900 shadow-sm ring-1 ring-inset
-                                            ring-gray-300 placeholder:text-gray-400
-                                                focus:ring-2 focus:ring-inset
-                                            focus:ring-indigo-600 sm:text-sm sm:leading-6' />
-                                    <label htmlFor="">Estado</label>
-                                    <input type="text"
-                                            className='block w-full rounded-md border-0 py-1.5
-                                            text-gray-900 shadow-sm ring-1 ring-inset
-                                            ring-gray-300 placeholder:text-gray-400
-                                                focus:ring-2 focus:ring-inset
-                                            focus:ring-indigo-600 sm:text-sm sm:leading-6' />
-                                </form>
+                                    <p className='text-xl font-bold text-slate-600 m-2'>
+                                    Nombre: {cliente[0]?.nombre}
+                                    </p>
+                                    <p className='text-xl font-bold text-slate-600 m-2'>
+                                    Apellido: {cliente[0]?.apellido}
+                                    </p>
+                                    <p className='text-xl font-bold text-slate-600 m-2'>
+                                    Cedula: {cliente[0]?.cedula}
+                                    </p>
+                                    <p className='text-xl font-bold text-slate-600 m-2'>
+                                    Telefono: {cliente[0]?.telefono}
+                                    </p>
+                                    <p className='text-xl font-bold text-slate-600 m-2'>
+                                    Correo: {cliente[0]?.email}
+                                    </p>
                             </div>
                             <div>
                                 <p className='text-xl font-bold text-slate-800 m-2 text-center'>Vehiculo</p>
-                                <p className='text-xl font-bold text-slate-600 m-2'>Marca:#####</p>
-                                <p className='text-xl font-bold text-slate-600 m-2'>Modelo:#####</p>
-                                <p className='text-xl font-bold text-slate-600 m-2'>Kilometraje:#####</p>
-                                <p className='text-xl font-bold text-slate-600 m-2'>Valor:$#####</p>
+                                <p className='text-xl font-bold text-slate-600 m-2'>
+                                    Marca: {marcavehiculo[0]?.nombre}
+                                    </p>
+                                <p className='text-xl font-bold text-slate-600 m-2'>
+                                    Modelo: {modelo[0]?.year}
+                                    </p>
+                                <p className='text-xl font-bold text-slate-600 m-2'>
+                                    Kilometraje: {cliente[0]?.vehiculo?.kilometraje}
+                                    </p>
+                                <p className='text-xl font-bold text-slate-600 m-2'>
+                                    Valor:$ {cliente[0]?.vehiculo?.valor}
+                                    </p>
                                 <p className='text-xl font-bold text-slate-600 m-2'>Medio compra:##</p>
                             </div>
-                            <div>
-                                <h1 className='text-xl font-bold text-slate-800 m-2 text-center'>Proceso</h1>
-                                <form >
-                                    <label htmlFor="" >Estado actual</label>
-                                    <select name="" id="" className='ml-1 border-2 border-slate-200'>
-                                        <option>Pendiente</option>
-                                        <option>Radicado</option>
-                                        <option>Documentacion</option>
-                                        <option>Finaoptionzado</option>
-                                    </select>
-                                    <div className='text-center flex flex-col'>
-                                        <h2 className=' text-xl font-bold text-slate-800 mt-4 text-center'>Agendar cita</h2>
-                                        <input type="date" className='mt-3 border-2 border-slate-200' />
-                                        <label htmlFor="" className='text-xl font-bold text-slate-600 m-2 text-left'>Comentario</label>
-                                        <textarea name="" id="" cols="30" rows="5" className='border-2 border-slate-200 rounded-xl'></textarea>
-                                    </div>
-                                </form>
-                            </div>
+                            
                         </div>
-                            <div className='w-full flex justify-center '>
-                                <button className='w-1/2  bg-sky-500 rounded-md p-3 mt-5 text-white font-bold shadow hover:bg-sky-800 cursor-pointer'>Guardar Cambios</button>
-                            </div>
+                            
                     </div>
                 
                 

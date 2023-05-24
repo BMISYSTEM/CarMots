@@ -114,9 +114,9 @@ const peritaje = (e) =>
                 className= {`${modonoche ? "bg-black text-white border-slate-900": "bg-white border-slate-900"} block w-2/6 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset
                  ring-slate-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600
                   sm:text-sm sm:leading-6 text-center`}>
-                    <option value="" selected>--Seleccione--</option>
+                    <option defaultValue="" selected>--Seleccione--</option>
                     {marcas.marcas.map(row=>(
-                      <option value={row['id']}>{row['nombre']}</option>
+                      <option defaultValue={row['id']}>{row['nombre']}</option>
                     ))}
                 </select>
                 <label htmlFor="">Modelo</label>
@@ -125,12 +125,10 @@ const peritaje = (e) =>
                 className= {`${modonoche ? "bg-black text-white border-slate-900": "bg-white border-slate-900"} block w-2/6 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset
                  ring-slate-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600
                   sm:text-sm sm:leading-6 text-center`}>
-                    <option value="" selected>--Seleccione--</option>
+                    <option defaultValue="" selected>--Seleccione--</option>
                     {modelosdata.modelos.map(row=>(
-                      <option value={row['id']}>{row['year']}</option>
+                      <option defaultValue={row['id']}>{row['year']}</option>
                     ))}
-                    <option value="">2023</option>
-                    <option value="">2017</option>
                 </select>
                 <label htmlFor="">Estados</label>
                 <select name="" id="" 
@@ -138,9 +136,9 @@ const peritaje = (e) =>
                 className= {`${modonoche ? "bg-black text-white border-slate-900": "bg-white border-slate-900"} block w-2/6 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset
                  ring-slate-500 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600
                   sm:text-sm sm:leading-6 text-center`}>
-                    <option value="" selected>--Seleccione--</option>
+                    <option defaultValue="" selected>--Seleccione--</option>
                     {estadosall.estados.map(row=>(
-                      <option value={row['id']}>{row['estado']}</option>
+                      <option defaultValue={row['id']}>{row['estado']}</option>
 
                     ))}
                     

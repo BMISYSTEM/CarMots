@@ -51,7 +51,7 @@ export default function Estados() {
                 
                   
                     {estadosall.estados.map(row=>(
-                      <tr className=' text-center w-full  border-b-2 border-slate-200  hover:cursor-pointer text-sm'>
+                      <tr key={row.id} className=' text-center w-full  border-b-2 border-slate-200  hover:cursor-pointer text-sm'>
                         <td >{row['id']}</td>
                         <td>{row['estado']}</td>
                         <td>

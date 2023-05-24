@@ -15,6 +15,11 @@ const BpsystemProvider = ({ children }) => {
   const [modeloserror, setModeloserror] = useState('')
   const [estadoserror, setEstados] = useState('')
   const [vehiculoserrores, setVehiculos] = useState('')
+  const [menuloading, setmenucarga] = useState(false)
+  const [vehiculoseleccionado, setSelectvehiculo] = useState([])
+  const [clienteseleccionado, setclienteseleccionado] = useState([])
+  const [usuarioseleccionado, setUsuarioseleccionado] = useState([])
+  const [usuariosall, setUsuarios] = useState([])
   // modo noche
   const [modonoche, setModonoche] = useState(false)
 
@@ -23,10 +28,12 @@ const BpsystemProvider = ({ children }) => {
 
 
 
-  const handleClickModalCliente = () => {
+  const handleClickModalCliente = (id) => {
+    setclienteseleccionado(id)
     setclienteModal(!clienteModal)
   }
-  const handleClickModalUsuario = () => {
+  const handleClickModalUsuario = (id) => {
+    setUsuarioseleccionado(id)
     setusuariosModal(!usuariosModal)
   }
   const handleClickModalVehiculos = () => {
@@ -44,10 +51,10 @@ const BpsystemProvider = ({ children }) => {
 
       })
       await marcasmutate()
-      console.log(respuesta)
+      // console.log(respuesta)
 
     } catch (error) {
-      console.log(error)
+      // console.log(error)
     }
   }
   //consulta todas las marcas
@@ -62,8 +69,6 @@ const BpsystemProvider = ({ children }) => {
         throw Error(error?.response?.data?.errors)
       })
   )
-
-
   // -------------------------------------------MODELOS---------------------------------------------
 
   const createmodelos = async (datos) => {
@@ -74,9 +79,9 @@ const BpsystemProvider = ({ children }) => {
         }
       })
       await mutateModelos()
-      console.log(respuesta)
+      // console.log(respuesta)
     } catch (error) {
-      setModeloserror(error)
+      // setModeloserror(error)
     }
   }
 
@@ -102,10 +107,10 @@ const BpsystemProvider = ({ children }) => {
           Authorization: `Bearer ${token}`
         }
       })
-      console.log(respuesta)
+      // console.log(respuesta)
       await estadosmutate()
     } catch (error) {
-      setEstados(error)
+      // setEstados(error)
     }
   }
 
@@ -125,8 +130,6 @@ const BpsystemProvider = ({ children }) => {
   )
 
   //-------------------------------------------VEHICULOS------------------------------------------------------------------------------------
-
-
   const createVehiculos = async (datos) => {
     try {
       const respuesta = await clienteAxios.post('/api/vehiculos', datos,
@@ -137,6 +140,7 @@ const BpsystemProvider = ({ children }) => {
           }
         }
       )
+    
       await vehiculosmute()
     } catch (error) {
       setVehiculos(error)
@@ -157,6 +161,52 @@ const BpsystemProvider = ({ children }) => {
         }
       )
   )
+  //-------------------------------------------------------------CLIENTES--------------------------------------------
+  //create
+  const createclientes = async(data) => {
+    try {
+
+      const respuesta = await clienteAxios.post('/api/clientes',data,{
+        headers:{
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`
+        }
+      })
+      await clientesmutate()
+      // console.log(respuesta)
+    } catch (error) {
+      // console.log(error)
+    }
+  }
+  
+  const {data: clientesall, error: errorclientes, isLoading: clientesloading, mutate: clientesmutate } = useSWR('/api/clientes',()=>
+    clienteAxios('/api/clientes',
+    {
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    })
+  )
+
+  //usuarios
+
+  const {data: usuarios, error: errorusuarios, isLoading: usuariosloading, mutate: usuariosmutate } = useSWR('/api/usuarios',()=>
+    clienteAxios('/api/usuarios',
+    {
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    })
+  )
+  const {data: usuariospermisos, error: errorusuariospermisos, isLoading: usuariosloadingpermisos, mutate: usuariosmutatepermisos } = useSWR('/api/usuarios/permisos',()=>
+    clienteAxios('/api/usuarios/permisos',
+    {
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    })
+  )
+  
   return (
     <BpsystemContext.Provider
       value={{
@@ -186,7 +236,20 @@ const BpsystemProvider = ({ children }) => {
         vehiculosloading,
         createVehiculos,
         handleClickModalVehiculos,
-        vehiculosModal
+        vehiculosModal,
+        setmenucarga,
+        menuloading
+        ,vehiculoseleccionado,
+        setSelectvehiculo,
+        createclientes,
+        clientesall,
+        clientesloading,
+        clienteseleccionado,
+        usuarios,
+        usuarioseleccionado,
+        usuariosloading,
+        usuariospermisos
+
       }}
     >{children}</BpsystemContext.Provider>
   )

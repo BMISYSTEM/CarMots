@@ -1,12 +1,11 @@
 import React from 'react'
 import useBpsystem from '../hooks/useBpsystem'
+import Tarjetasvehiculos from './tarjetasvehiculos'
 
 export default function ModalVehiculos() {
   const url = import.meta.env.VITE_API_URL
 
     const {handleClickModalVehiculos,modonoche,vehiculosall,vehiculosloading} = useBpsystem()
-
-    console.log(vehiculosall.map(ve=>ve['marcas']))
 
     if (vehiculosloading)
     {
@@ -18,7 +17,7 @@ export default function ModalVehiculos() {
         )
     }
   return (
-    <div className= {`${modonoche ? "bg-black text-white":"bg-white text-slate-600" } mr-64w-full h-full m-0  rounded-xl  flex flex-col gap-2 p-5  absolute`}>
+    <div className= {`${modonoche ? "bg-black text-white":"bg-white text-slate-600" } mr-64w-full h-full m-0 shadow-xl rounded-xl  flex flex-col gap-2 p-5  absolute`}>
         <div className="flex justify-end">
                         <button type="button"
                                 onClick={() => handleClickModalVehiculos()}>
@@ -59,27 +58,12 @@ export default function ModalVehiculos() {
         {/* contenedor de imagenes */}
        <div className='grid grid-cols-3 gap-2 text-center rounded-xl  mt-4  overflow-auto'>
             {/* contenedor 1 */}
-            {vehiculosall.map(vehiculo=>
-                <div className=' w-auto h-auto flex flex-col rounded-xl shadow-xl'>
-                <div className='w-64 h-auto '>
-                    <img src={url+"/storage/vehiculos/"+ vehiculo['foto1']} className='rounded-xl shadow-xl' alt="" />
-                </div>
-                <div className='mb-0'>
-                    <p className='font-bold text-xl'>Marca</p>
-                    <p>{vehiculo['marcas']}</p>
-                    <p className='font-bold text-xl'>Modelo</p>
-                    <p>{vehiculo['modelos']}</p>
-                    <p className='font-bold text-xl'>Estado</p>
-                    <p>{vehiculo['estados']}</p>
-                    <p className='font-bold text-xl'>Valor</p>
-                    <p>{vehiculo['valor']}</p>
-                    <button 
-                onClick={()=> handleClickModalVehiculos()}
-                className='bg-sky-500 rounded-md p-3 mt-5 text-white font-bold shadow hover:bg-sky-800 cursor-pointer mb-2'>
-                    Seleccionar vehiculo
-                    </button>
-                </div>
-                </div>
+            {vehiculosall.data.map(vehiculo=>
+               <Tarjetasvehiculos 
+               key={vehiculo['id']}
+               vehiculo={vehiculo}
+               
+               />
             )}
            
            

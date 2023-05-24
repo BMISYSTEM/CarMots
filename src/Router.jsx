@@ -20,6 +20,7 @@ import Aprobados from './OpctionNav/Submenus/Aprobados'
 import Modelos from './OpctionNav/Submenus/Modelos'
 import Vehiculos from './OpctionNav/Submenus/Vehiculos'
 import Estados from './OpctionNav/Submenus/Estados'
+import ListaUsuarios from './OpctionNav/Submenus/ListaUsuarios'
 
 const router = createBrowserRouter(
     [
@@ -68,6 +69,10 @@ const router = createBrowserRouter(
                 },
                 {
                     path:'/panel/Usuarios',
+                    element: <ListaUsuarios/>
+                },
+                {
+                    path:'/panel/Usuarios/list',
                     element: <Usuarios/>
                 },
                 {

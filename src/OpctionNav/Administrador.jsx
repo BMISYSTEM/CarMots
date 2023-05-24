@@ -2,7 +2,18 @@ import React from 'react'
 import useBpsystem from '../hooks/useBpsystem'
 
 export default function Administrador() {
-  const {handleClickModalCliente,handleClickModalUsuario,modonoche} = useBpsystem()
+  const {handleClickModalCliente,handleClickModalUsuario,modonoche,clientesall,clientesloading,usuarios} = useBpsystem()
+  if(clientesloading)
+  {
+    return (
+      <>
+              <div className='w-full  h-screen grid place-items-center '>
+              <img src="../../img/recatspiner.gif" alt="cargando..." />
+              <p>cargando...</p>
+              </div>
+          </>
+      );
+  }
   return (
     <>
       <div className={`${modonoche ? "bg-black text-white border-slate-800": "bg-white border-slate-200"} h-full w-auto flex flex-col gap-1 p-2 `}>
@@ -11,52 +22,38 @@ export default function Administrador() {
             <h1 className='text-center font-bold text-xl'>Clientes</h1>
             <table className='p-3 w-full '>
               <thead>
-                <tr className='w-full  border-b-2 border-slate-200 '>
-                  <td className='text-left'>Nombre</td>
-                  <td>Telefono</td>
-                  <td>Correo</td>
-                  <td>vehiculo</td>
-                  <td>compra</td>
-                  <td>estado</td>
-                  <td>Asesor</td>
-                  <td>Acciones</td>
+                <tr className=' text-left w-full  border-b-2 border-slate-200  hover:cursor-pointer text-xl'>
+                  <td className='text-center'>Nombre</td>
+                  <td className='text-center'>Telefono</td>
+                  <td className='text-center'>Correo</td>
+                  <td className='text-center'>vehiculo</td>
+                  <td className='text-center'>compra</td>
+                  <td className='text-center'>estado</td>
+                  <td className='text-center'>Asesor</td>
+                  <td className='text-center'>Acciones</td>
                 </tr>
               </thead>
               <tbody>
-
-                <tr className=' text-left w-full  border-b-2 border-slate-200 hover:bg-sky-300 hover:cursor-pointer text-sm'>
-                  <td>Bairon</td>
-                  <td>3184482848</td>
-                  <td>baironmenesesidarrag.990128@gmail.com</td>
-                  <td>Chevrolet</td>
-                  <td>Retoma</td>
-                  <td>pre Aprobado</td>
-                  <td>Brandon</td>
-                  <td>
-                  <p  className='flex text-center'>
-                    <svg xmlns="http://www.w3.org/2000/svg" onClick={()=> handleClickModalCliente()} fill="red" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                    </svg>
-                  </p>
-                  </td>
-                </tr>
-                <tr className=' text-left w-full  border-b-2 border-slate-200 hover:bg-sky-300 hover:cursor-pointer text-sm'>
-                  <td>Bairon</td>
-                  <td>3184482848</td>
-                  <td>baironmenesesidarrag.990128@gmail.com</td>
-                  <td>Chevrolet</td>
-                  <td>Retoma</td>
-                  <td>pre Aprobado</td>
-                  <td>Brandon</td>
-                  <td>
-                  <p  className='flex text-center'>
-                    <svg xmlns="http://www.w3.org/2000/svg" onClick={()=> handleClickModalCliente()} fill="red" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                    </svg>
-                  </p>
-                  </td>
-
-                </tr>
+                {clientesall?.data?.data?.map(cliente =>
+                  <tr key={cliente.id} className=' text-left w-full  border-b-2 border-slate-200  hover:cursor-pointer text-sm'>
+                    <td className='text-center'>{cliente['nombre']}</td>
+                    <td className='text-center'>{cliente['telefono']}</td>
+                    <td className='text-center'>{cliente['email']}</td>
+                    <td className='text-center'>{cliente.vehiculo['placa']}</td>
+                    <td className='text-center'>{cliente.estado['estado']}</td>
+                    <td className='text-center'>{cliente.estado['estado']}</td>
+                    <td className='text-center'>{cliente.user['name']}</td>
+                    <td className='text-center items-center'>
+                      <button 
+                        onClick={()=>handleClickModalCliente(cliente.id) }
+                        className='w-1/2 text-center  p-2 rounded-xl bg-sky-700 text-lg text-white font-bold hover:bg-sky-950'>
+                          Ver
+                      </button>
+                    </td>
+                    
+                  </tr>
+                )}
+               
               </tbody>
             </table>
 
@@ -67,9 +64,8 @@ export default function Administrador() {
             <h1 className='text-center font-bold text-xl'>Usuarios</h1>
             <table className='p-3 w-full overflow-auto'>
               <thead>
-                <tr className='w-full  border-b-2 border-slate-200 '>
+                <tr className='w-full  border-b-2 border-slate-200 text-center text-xl'>
                   <td >Nombre</td>
-                  <td>Telefono</td>
                   <td>Correo</td>
                   <td>Cedula</td>
                   <td>Fecha inicio</td>
@@ -79,38 +75,23 @@ export default function Administrador() {
                 </tr>
               </thead>
               <tbody>
-                <tr className=' text-left w-full  border-b-2 border-slate-200 hover:bg-sky-300 hover:cursor-pointer text-sm'>
-                  <td>Bairon</td>
-                  <td>3184482848</td>
-                  <td>baironmenesesidarrag.990128@gmail.com</td>
-                  <td>1143994831</td>
-                  <td>20/01/2022</td>
-                  <td>20</td>
-                  <td>7</td>
-                  <td>
-                  <p  className='flex text-center'>
-                    <svg xmlns="http://www.w3.org/2000/svg" onClick={()=> handleClickModalUsuario()} fill="red" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                    </svg>
-                  </p>
+                {usuarios?.data?.map(usuarios => 
+                  <tr key={usuarios['id']} className=' text-left w-full  border-b-2 border-slate-200  hover:cursor-pointer text-sm'>
+                    <td className='text-center items-center'>{usuarios['name']}</td>
+                    <td className='text-center items-center'>{usuarios['email']}</td>
+                    <td className='text-center items-center'>{usuarios['cedula']}</td>
+                    <td className='text-center items-center'>{usuarios['fecha_inicio']}</td>
+                    <td className='text-center items-center'>{usuarios['clientes']}</td>
+                    <td className='text-center items-center'>{usuarios['cerrados']}</td>
+                    <td className='text-center items-center'>
+                      <button 
+                        onClick={()=> handleClickModalUsuario(usuarios['id']) }
+                        className='w-1/2 text-center  p-2 rounded-xl bg-sky-700 text-lg text-white font-bold hover:bg-sky-950'>
+                          Ver
+                      </button>
                     </td>
-                </tr>
-                <tr className=' text-left w-full  border-b-2 border-slate-200 hover:bg-sky-300 hover:cursor-pointer text-sm'>
-                <td>Bairon</td>
-                  <td>3184482848</td>
-                  <td>baironmenesesidarrag.990128@gmail.com</td>
-                  <td>1143994831</td>
-                  <td>20/01/2022</td>
-                  <td>20</td>
-                  <td>7</td>
-                  <td>
-                  <p  className='flex flex-row text-center'>
-                    <svg xmlns="http://www.w3.org/2000/svg" onClick={()=> handleClickModalUsuario()} fill="red" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                    </svg>
-                  </p>
-                    </td>
-                </tr>
+                  </tr>
+                )}
               </tbody>
             </table>
 

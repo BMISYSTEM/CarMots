@@ -9,14 +9,14 @@ export default function Modelos() {
     const [modelo,setModelo] = useState('')
     const modelor = createRef()
     const token = localStorage.getItem('TOKEN_USER')
-    console.log(modelosdata)
+    // console.log(modelosdata)
 const handleclik =  (e) =>{
     e.preventDefault()
     const datos = {
         year: modelo 
     }
      createmodelos(datos)
-    console.log(datos)
+    // console.log(datos)
     toast.success('guardando...')
     
 }
@@ -79,7 +79,7 @@ if(loadingModelos){
                 
                   
                     {modelosdata.modelos.map(row=>(
-                      <tr className=' text-center w-full  border-b-2 border-slate-200  hover:cursor-pointer text-sm'>
+                      <tr key={row.id} className=' text-center w-full  border-b-2 border-slate-200  hover:cursor-pointer text-sm'>
                         <td >{row['id']}</td>
                         <td>{row['year']}</td>
                         <td>
