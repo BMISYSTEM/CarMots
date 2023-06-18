@@ -1,4 +1,4 @@
-import {useContext} from 'react'
+import {useContext,memo} from 'react'
 import BpsystemProvider from '../context/BpsystemProvider'
 //globalizamos el archivo que contendra la logica del sistema front
 const useBpsystem = () =>

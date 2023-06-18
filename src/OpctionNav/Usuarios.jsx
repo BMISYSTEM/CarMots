@@ -2,6 +2,7 @@ import {createRef,useState} from 'react'
 import useBpsystem from '../hooks/useBpsystem'
 import { useAuth } from '../hooks/useAuth'
 import { toast } from 'react-toastify'
+import { useUsuarios } from '../hooks/useUsuarios'
 
 
 
@@ -14,7 +15,8 @@ const initialValues =
 }
 
 export default function Usuarios() {
-    const {errores,create} = useAuth({middleware:'auth'})
+    const {errores} = useAuth({middleware:'auth'})
+    const {create} = useUsuarios()
     const {modonoche} = useBpsystem()
     const [dashboardr,setDashboard] = useState(0)
     const [administradorr,setAdministrador] = useState(0)

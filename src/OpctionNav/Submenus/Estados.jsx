@@ -1,11 +1,19 @@
-import { useRef } from 'react'
+import Loading from '../../Componentes/Loading'
 import useBpsystem from '../../hooks/useBpsystem'
+import { useEstados } from '../../hooks/useEstados'
+import { useRef } from 'react'
 import { toast } from 'react-toastify'
 
 export default function Estados() {
-    const {modonoche,estadoserror,createEstados,estadosall} = useBpsystem()
+    const {modonoche} = useBpsystem()
+    const { estadosall,createEstados,estadosloading} = useEstados()
     const estado = useRef()
-
+    if(estadosloading)
+    {
+      return (
+        <Loading/>
+        );
+    }
     const handleclick = (e) => {
         e.preventDefault()
         console.log(estado.current.value)
@@ -13,7 +21,7 @@ export default function Estados() {
           nombre : estado.current.value}
         // marcasinsert(data)
         createEstados(data)
-        toast.success("agregando marca...")
+        toast.success("agregando estados...")
       }
   return (
     <>
@@ -50,7 +58,7 @@ export default function Estados() {
               <tbody>
                 
                   
-                    {estadosall.estados.map(row=>(
+                    {estadosall?.estados?.map(row=>(
                       <tr key={row.id} className=' text-center w-full  border-b-2 border-slate-200  hover:cursor-pointer text-sm'>
                         <td >{row['id']}</td>
                         <td>{row['estado']}</td>

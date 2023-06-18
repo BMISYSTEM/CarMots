@@ -1,17 +1,17 @@
 import React from 'react'
 import useBpsystem from '../hooks/useBpsystem'
+import {useClientes} from '../hooks/useClientes';
+import { useUsuarios } from '../hooks/useUsuarios';
+import Loading from '../Componentes/Loading';
 
 export default function Administrador() {
-  const {handleClickModalCliente,handleClickModalUsuario,modonoche,clientesall,clientesloading,usuarios} = useBpsystem()
-  if(clientesloading)
+  const {handleClickModalCliente,handleClickModalUsuario,modonoche} = useBpsystem()
+  const {clientesloading,clientesall} = useClientes()
+  const {usuarios,usuariosloading} = useUsuarios()
+  if(clientesloading || usuariosloading)
   {
     return (
-      <>
-              <div className='w-full  h-screen grid place-items-center '>
-              <img src="../../img/recatspiner.gif" alt="cargando..." />
-              <p>cargando...</p>
-              </div>
-          </>
+     <Loading />
       );
   }
   return (
@@ -39,13 +39,13 @@ export default function Administrador() {
                     <td className='text-center'>{cliente['nombre']}</td>
                     <td className='text-center'>{cliente['telefono']}</td>
                     <td className='text-center'>{cliente['email']}</td>
-                    <td className='text-center'>{cliente.vehiculo['placa']}</td>
-                    <td className='text-center'>{cliente.estado['estado']}</td>
-                    <td className='text-center'>{cliente.estado['estado']}</td>
-                    <td className='text-center'>{cliente.user['name']}</td>
+                    <td className='text-center'>-</td>
+                    <td className='text-center'>-</td>
+                    <td className='text-center'>-</td>
+                    <td className='text-center'>-</td>
                     <td className='text-center items-center'>
                       <button 
-                        onClick={()=>handleClickModalCliente(cliente.id) }
+                        onClick={()=>handleClickModalCliente(cliente?.id) }
                         className='w-1/2 text-center  p-2 rounded-xl bg-sky-700 text-lg text-white font-bold hover:bg-sky-950'>
                           Ver
                       </button>

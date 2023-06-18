@@ -7,27 +7,66 @@ import clienteAxios from '../conffig/axios';
 const BpsystemContext = createContext();
 const BpsystemProvider = ({ children }) => {
   const token = localStorage.getItem('TOKEN_USER')
+  
   const [clienteModal, setclienteModal] = useState(false)
   const [usuariosModal, setusuariosModal] = useState(false)
   const [vehiculosModal, setVehiculosModal] = useState(false)
+  const [seguimientoModal, setseguimientoModal] = useState(false)
+  const [editarclientesfinanciera, seteditarclientesfinanciera] = useState(false)
+  const [UsuariosPermisosModal, setUsuariosPermisosModal] = useState(false)
+  const [ClientesCentrofinanciero, setClientesCentrofinanciero] = useState(false)
   const [permisos, setPermisos] = useState([])
   const [componente, setComponente] = useState('')
   const [modeloserror, setModeloserror] = useState('')
   const [estadoserror, setEstados] = useState('')
   const [vehiculoserrores, setVehiculos] = useState('')
   const [menuloading, setmenucarga] = useState(false)
-  const [vehiculoseleccionado, setSelectvehiculo] = useState([])
-  const [clienteseleccionado, setclienteseleccionado] = useState([])
-  const [usuarioseleccionado, setUsuarioseleccionado] = useState([])
+  const [vehiculoseleccionado, setSelectvehiculo] = useState('')
+  const [asesoriosseleccionados, setasesorios] = useState([])
+  const [asesorios, seleccion] = useState([])
+  const [clienteseleccionado, setclienteseleccionado] = useState('')
+  const [usuarioseleccionado, setUsuarioseleccionado] = useState('')
+  const [UsuarioSeleccionPermisos, setUsuarioSeleccionPermisos] = useState('')
+  const [clienteselecciondocumentos, setclienteselecciondocumentos] = useState('')
+  const [clienteseleccionediccion, setclienteseleccionediccion] = useState('')
+  const [clienteseleccionseguimiento, setclienteseleccionseguimiento] = useState('')
   const [usuariosall, setUsuarios] = useState([])
+
+
+  //documento pdf financiero
+  const [financiero,setfinanciero] = useState([])
+  const [documentacion,setdocumentacion] = useState([])
+  const [matricula,setmatricula] = useState([])
+  const [retomas,setretoma] = useState([])
+
+
+
+  //datos de swrs
+  const [marcas,setmarcas] = useState({})
   // modo noche
   const [modonoche, setModonoche] = useState(false)
-
   //states de marcas 
   const [insertmarca, setInsertMarca] = useState()
+  
+  //guardar datos para documento pdf
 
-
-
+  const handleclickfinanciero = (data) =>
+  {
+    setfinanciero(data)
+  }
+  const handleclickdocumentacion = (data) =>
+  {
+    setdocumentacion(data)
+  }
+  const handleclickmatriculas = (data) =>
+  {
+    setmatricula(data)
+  }
+  const handleclickretoma = (data) =>
+  {
+    setretoma(data)
+  }
+  
   const handleClickModalCliente = (id) => {
     setclienteseleccionado(id)
     setclienteModal(!clienteModal)
@@ -39,219 +78,82 @@ const BpsystemProvider = ({ children }) => {
   const handleClickModalVehiculos = () => {
     setVehiculosModal(!vehiculosModal)
   }
-
-
-  //creacion de marcas 
-  const marcasinsert = async (data) => {
-    try {
-      const respuesta = await clienteAxios.post('/api/marca', data, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-
-      })
-      await marcasmutate()
-      // console.log(respuesta)
-
-    } catch (error) {
-      // console.log(error)
-    }
+  const handleclickModalUsuariosPermisos = () => {
+    setUsuariosPermisosModal(!UsuariosPermisosModal)
   }
-  //consulta todas las marcas
-  const { data: marcas, error, isLoading, mutate: marcasmutate } = useSWR('/api/index', () =>
-    clienteAxios('/api/index', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then(res => res.data)
-      .catch(error => {
-        throw Error(error?.response?.data?.errors)
-      })
-  )
-  // -------------------------------------------MODELOS---------------------------------------------
-
-  const createmodelos = async (datos) => {
-    try {
-      const respuesta = await clienteAxios.post('/api/modelo', datos, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      await mutateModelos()
-      // console.log(respuesta)
-    } catch (error) {
-      // setModeloserror(error)
-    }
+  const handleclickModalClienteCentrofinanciero = (id) => {
+    setclienteselecciondocumentos(id)
+    setClientesCentrofinanciero(!ClientesCentrofinanciero)
+  }
+  const handleclickeditarclientefinanciera = (id) => {
+    setclienteseleccionediccion(id)
+    seteditarclientesfinanciera(!editarclientesfinanciera)
+  }
+  const hndelclickmodalseguimiento = (id) => 
+  {
+    setclienteseleccionseguimiento(id)
+    setseguimientoModal(!seguimientoModal)
+  }
+  const asesorioslista = (data) => 
+  {
+    setasesorios(asesoriosseleccionados.concat(data))
+  }
+  const remplaceasesorioslista = (data) => 
+  {
+    setasesorios(data)
   }
 
-
-  const { data: modelosdata, error: errorModel, isLoading: loadingModelos, mutate: mutateModelos } = useSWR('/api/modelo', () =>
-    clienteAxios('/api/modelo', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then(res => res.data)
-      .catch(error => {
-        throw Error(error?.response?.data?.errors)
-      })
-  )
-  //-------------------------------------------------ESTADOS-----------------------------------------------------------
-
-
-  const createEstados = async (data) => {
-    try {
-      const respuesta = await clienteAxios.post('/api/estados', data, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      // console.log(respuesta)
-      await estadosmutate()
-    } catch (error) {
-      // setEstados(error)
-    }
-  }
-
-
-  const { data: estadosall, error: errorEstados, isLoading: estadosloading, mutate: estadosmutate } = useSWR('/api/estados', () =>
-    clienteAxios('/api/estados', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then(res => res.data)
-      .catch(
-        error => {
-          throw Error(error?.response?.data?.errors)
-        }
-      )
-  )
-
-  //-------------------------------------------VEHICULOS------------------------------------------------------------------------------------
-  const createVehiculos = async (datos) => {
-    try {
-      const respuesta = await clienteAxios.post('/api/vehiculos', datos,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
-    
-      await vehiculosmute()
-    } catch (error) {
-      setVehiculos(error)
-    }
-
-
-  }
-  const { data: vehiculosall, error: errorvehiculos, isLoading: vehiculosloading, mutate: vehiculosmute } = useSWR('/api/vehiculos', () =>
-    clienteAxios('/api/vehiculos', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
-      .then(res => res.data)
-      .catch(
-        error => {
-          throw Error(error?.response?.data?.errors)
-        }
-      )
-  )
-  //-------------------------------------------------------------CLIENTES--------------------------------------------
-  //create
-  const createclientes = async(data) => {
-    try {
-
-      const respuesta = await clienteAxios.post('/api/clientes',data,{
-        headers:{
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`
-        }
-      })
-      await clientesmutate()
-      // console.log(respuesta)
-    } catch (error) {
-      // console.log(error)
-    }
-  }
-  
-  const {data: clientesall, error: errorclientes, isLoading: clientesloading, mutate: clientesmutate } = useSWR('/api/clientes',()=>
-    clienteAxios('/api/clientes',
-    {
-      headers:{
-        Authorization:`Bearer ${token}`
-      }
-    })
-  )
-
-  //usuarios
-
-  const {data: usuarios, error: errorusuarios, isLoading: usuariosloading, mutate: usuariosmutate } = useSWR('/api/usuarios',()=>
-    clienteAxios('/api/usuarios',
-    {
-      headers:{
-        Authorization:`Bearer ${token}`
-      }
-    })
-  )
-  const {data: usuariospermisos, error: errorusuariospermisos, isLoading: usuariosloadingpermisos, mutate: usuariosmutatepermisos } = useSWR('/api/usuarios/permisos',()=>
-    clienteAxios('/api/usuarios/permisos',
-    {
-      headers:{
-        Authorization:`Bearer ${token}`
-      }
-    })
-  )
-  
   return (
     <BpsystemContext.Provider
-      value={{
-        clienteModal,
-        handleClickModalCliente,
-        handleClickModalUsuario,
-        usuariosModal,
-        componente,
-        setModonoche,
-        modonoche,
-        setPermisos,
-        marcasinsert,
-        marcas,
-        isLoading,
-        createmodelos,
-        loadingModelos,
-        errorModel,
-        modelosdata,
-        modeloserror,
-        setModeloserror,
-        estadoserror,
-        createEstados,
-        estadosloading,
-        estadosall,
-        vehiculosall,
-        vehiculoserrores,
-        vehiculosloading,
-        createVehiculos,
-        handleClickModalVehiculos,
-        vehiculosModal,
-        setmenucarga,
-        menuloading
-        ,vehiculoseleccionado,
-        setSelectvehiculo,
-        createclientes,
-        clientesall,
-        clientesloading,
-        clienteseleccionado,
-        usuarios,
-        usuarioseleccionado,
-        usuariosloading,
-        usuariospermisos
-
+    value={{
+      retomas,
+      matricula,
+      financiero,
+      documentacion,
+      handleclickfinanciero,
+      handleclickdocumentacion,
+      handleclickmatriculas,
+      handleclickretoma,
+      remplaceasesorioslista,
+      clienteModal,
+      handleClickModalCliente,
+      handleClickModalUsuario,
+      usuariosModal,
+      componente,
+      setModonoche,
+      modonoche,
+      setPermisos,
+      handleClickModalVehiculos,
+      vehiculosModal,
+      setmenucarga,
+      menuloading
+      ,vehiculoseleccionado,
+      setSelectvehiculo,
+      clienteseleccionado,
+      usuarioseleccionado,
+      setUsuariosPermisosModal,
+      UsuariosPermisosModal,
+      handleclickModalUsuariosPermisos,
+      UsuarioSeleccionPermisos,
+      setUsuarioSeleccionPermisos,
+      ClientesCentrofinanciero,
+      setClientesCentrofinanciero,
+      handleclickModalClienteCentrofinanciero,
+      setclienteselecciondocumentos,
+      clienteselecciondocumentos,
+      seteditarclientesfinanciera,
+      editarclientesfinanciera,
+      handleclickeditarclientefinanciera,
+      clienteseleccionediccion,
+      hndelclickmodalseguimiento,
+      setseguimientoModal,
+      seguimientoModal,
+      clienteseleccionseguimiento,
+      setasesorios,
+      asesoriosseleccionados,
+      asesorioslista,
       }}
-    >{children}</BpsystemContext.Provider>
+      >{children}</BpsystemContext.Provider>
   )
 }
 

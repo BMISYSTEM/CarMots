@@ -1,11 +1,12 @@
 import { useState,createRef } from 'react';
 import useBpsystem from '../../hooks/useBpsystem';
-import  useSWR  from 'swr';
-import clienteAxios from '../../conffig/axios';
+import { useModelos } from '../../hooks/useModelos';
 import { toast } from 'react-toastify';
 
+
 export default function Modelos() {
-    const {modonoche,createmodelos,loadingModelos,modelosdata,modeloserror,setModeloserror} = useBpsystem()
+    const {modonoche,setModeloserror} = useBpsystem()
+    const {modelosdata,loadingModelos,errorModel,createmodelos} = useModelos()
     const [modelo,setModelo] = useState('')
     const modelor = createRef()
     const token = localStorage.getItem('TOKEN_USER')
@@ -30,10 +31,10 @@ if(loadingModelos){
         </>
     );
     }
-    if (modeloserror?.response?.data?.errors) {
+    if (errorModel?.response?.data?.errors) {
     
         let mensajes = []
-        mensajes = Object.values(modeloserror.response.data.errors)
+        mensajes = Object.values(errorModel.response.data.errors)
        
         for (let index = 0; index < mensajes.length; index++) {
           toast.error(mensajes[index][0])
@@ -78,7 +79,7 @@ if(loadingModelos){
               <tbody>
                 
                   
-                    {modelosdata.modelos.map(row=>(
+                    {modelosdata?.modelos?.map(row=>(
                       <tr key={row.id} className=' text-center w-full  border-b-2 border-slate-200  hover:cursor-pointer text-sm'>
                         <td >{row['id']}</td>
                         <td>{row['year']}</td>

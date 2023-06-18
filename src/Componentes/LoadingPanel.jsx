@@ -11,7 +11,7 @@ export default function LoadingPanel() {
       <main className={`h-full w-screen md:mx-5 bg-white md:my-0 my-14 overflow-auto`}>
         <header className={` border-slate-200 w-full h-16 flex flex-row gap-5 shadow rounded-lg border-b-2  mt-2`}>
          
-        <div className='m-2 flex flex-col w-20 h-10 relative bg-slate-500 rounded-lg p-1 animate-pulse'>
+        <div className='m-2 flex flex-col w-20 h-10 relative bg-slate-500 rounded-lg p-1 '>
                             
         </div>
         <div className='m-2 flex flex-col w-20 h-10 relative bg-slate-500 rounded-lg p-1 animate-pulse'>

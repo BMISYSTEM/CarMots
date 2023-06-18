@@ -53,7 +53,7 @@ export default function Aside() {
   // console.log(p)
   return (
     <>
-        <aside className={`${barra ? "md:w-1/5 md:relative  h-screen absolute w-full" : 
+        <aside className={`${barra ? "md:w-1/5 md:relative  h-screen absolute w-full z-40" : 
           "md:w-1/12 md:h-screen h-12 mb-4 overflow-hidden flex  flex-col  absolute md:relative w-full"} 
           ${modonoche ? "bg-black text-white border-slate-800": "bg-white border-slate-200"}
           z-40 w-1/   backdrop-blur-sm shadow-xl ml-px border-r-2  -mx-1 overflow-auto`}>
@@ -100,14 +100,9 @@ export default function Aside() {
           {/* submenu */}
           <div className={`${submenuDasboard ? "hidden" : barraTitulos ? "" :"hidden"} flex flex-col w-auto text-center gap-1`} id='submenu' >
             <div className='my-1 font-sans hover:bg-slate-300 hover:text-indigo-600 cursor-pointer mx-6'>
-              <Link to={'/panel/dashboard/vendidos'}>Vendidos</Link>
+              <Link to={'/panel/dashboard/seguimiento'}>Seguimiento</Link>
             </div>
-            <div className='my-1 font-sans hover:bg-slate-300 hover:text-indigo-600 cursor-pointer mx-6'>
-              <Link >Pendientes</Link>
-            </div>
-            <div className='my-1 font-sans hover:bg-slate-300 hover:text-indigo-600 cursor-pointer mx-6'>
-              <Link >Aprobados</Link>
-            </div>
+            
           </div>
           <Link to={'/panel/project'} onClick={()=>setSeleccion('project')}>
           <div className={` flex ${barraTitulos ? "":"md:justify-center"} 
@@ -206,6 +201,9 @@ export default function Aside() {
               </div>
               <div className='my-1 font-sans hover:bg-slate-300 hover:text-indigo-600 cursor-pointer mx-6'>
                 <Link to={'/panel/ajustes/vehiculos'}>Vehiculos</Link>
+              </div>
+              <div className='my-1 font-sans hover:bg-slate-300 hover:text-indigo-600 cursor-pointer mx-6'>
+                <Link to={'/panel/ajustes/asesorios'}>Asesorios</Link>
               </div>
               <div className='my-1 font-sans hover:bg-slate-300 hover:text-indigo-600 cursor-pointer mx-6'>
                 <Link to={'/panel/ajustes/financieras'}>Financieras</Link>

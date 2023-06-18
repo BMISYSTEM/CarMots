@@ -1,11 +1,20 @@
-import { createRef } from 'react'
+import { createRef,memo} from 'react'
 import useBpsystem from '../../hooks/useBpsystem'
+import {useMarcas} from '../../hooks/useMarcas'
 import { toast } from 'react-toastify'
 
 export default function Marcas() {
-  const {modonoche,marcas,marcasinsert,isLoading} = useBpsystem()
+  const token = localStorage.getItem('TOKEN_USER')
+  const {modonoche} = useBpsystem()
   const marcar = createRef()
-  
+  //consulta marcas
+  const {marcas,isLoading,marcasinsert} = useMarcas()
+  if(isLoading){
+    return (
+      <p>cargando marcas</p>
+    )
+  }
+
   const handleclick = (e) => {
     e.preventDefault()
     console.log(marcar.current.value)
@@ -61,7 +70,7 @@ export default function Marcas() {
               <tbody>
                 
                   
-                    {marcas.marcas.map(row=>(
+                    {marcas?.marcas?.map(row=>(
                       <tr className=' text-center w-full  border-b-2 border-slate-200  hover:cursor-pointer text-sm'>
                         <td >{row['id']}</td>
                         <td>{row['nombre']}</td>

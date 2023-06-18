@@ -1,4 +1,4 @@
-import { useEffect,useState } from "react";
+import { useEffect,useState,memo} from "react";
 import useSWR from 'swr'
 import { useNavigate } from "react-router-dom";
 import clienteAxios from "../config/axios";
@@ -7,32 +7,29 @@ import useBpsystem from "./useBpsystem";
 
 export const useAuth = ({middleware,url}) =>
 {
-
-    //informacion del token 
-    // const [isLoadingP,setp] = useState()
     const token = localStorage.getItem('TOKEN_USER');
     const navigate = useNavigate();
     const datapermisos = [];
-    
-
     //revalidar la informacion del usuario logeado
     const {data:user,error,mutate,isLoading} = useSWR('/api/user',() => 
-        clienteAxios('/api/users',{
-            headers:{
-                Authorization: `Bearer ${token}`
-            }
-        })
-        .then(res => res.data)
-        .catch(error => {
-            throw Error(error?.response?.data?.errors)
-        })
+    clienteAxios('/api/users',{
+        headers:{
+            Authorization: `Bearer ${token}`
+        }
+    })
+    .then(res => res.data)
+    .catch(error => {
+        throw Error(error?.response?.data?.errors)
+    })
     );
 
+    
+    
     //login inicio de sessioon
     const login = async (datos,setErrores,setpermisos) =>
     {
         try {
-            const {data} = await clienteAxios.post('api/login/',datos)
+            const {data} = await clienteAxios.post('api/login',datos)
             await per(data)
             await permisosuser(setpermisos)
             // await permisosuser(setPermisos)
@@ -46,19 +43,20 @@ export const useAuth = ({middleware,url}) =>
         }
         
     }
+    
     const  per = async (data) =>{
       localStorage.setItem('TOKEN_USER',data.token)
       localStorage.setItem('img',data.user.img)
     }
     const permisosuser = async(setpermisos) => {
         
-            try {
-    
-                const p = await clienteAxios('/api/permisos/',{
-                  headers:{
+        try {
+            
+                const p = await clienteAxios('/api/permisos',{
+                    headers:{
                     Authorization: `Bearer ${token}`
-                  }
-                })
+                }
+            })
                 
                 setpermisos(p.data[0])
                 // console.log(p.data[0])
@@ -67,7 +65,7 @@ export const useAuth = ({middleware,url}) =>
                 console.log(error)
               }
         }
-          
+    
       
     const logaut = async() => {
         try {
@@ -84,24 +82,7 @@ export const useAuth = ({middleware,url}) =>
         }
         
     }
-    //crear usuarios nuevos
-    const create = async (datos,setErrores,setCreado) =>
-    {
-        try {
-            const {data} = await clienteAxios.post('/api/create/',datos,{
-                headers: {
-                'Content-Type':'multipart/form-data',
-                  Authorization: `Bearer ${token}`
-                }
-              })
-              setCreado(data)
-              setErrores([])
-        } catch (error) {
-            // console.log(error)
-            setErrores(error)
-            // console.log(Object.values(error.response.data.errors))
-        }
-    }
+
     useEffect(()=>{
         if(middleware === 'guest' && url && user )
         {
@@ -117,11 +98,10 @@ export const useAuth = ({middleware,url}) =>
     return {
         login,
         user,
-        create,
         isLoading,
         errores,
         logaut,datapermisos
         ,permisosuser
     }
-
+    
 }

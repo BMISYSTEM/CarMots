@@ -1,20 +1,34 @@
 import { useRef, useState } from 'react'
 import useBpsystem from '../hooks/useBpsystem'
 import { json } from 'react-router-dom'
+import { useClientes } from '../hooks/useClientes'
+import { useEstados } from '../hooks/useEstados'
+import { useMarcas } from '../hooks/useMarcas'
+import { useModelos } from '../hooks/useModelos'
 
 export default function ModalCoptionente() {
-    const {componente,handleClickModalCliente,modonoche,clienteseleccionado,clientesall,estadosall,marcas,modelosdata} = useBpsystem()
-    const cliente = Object.values(clientesall?.data?.data?.filter(clientes => clientes.id == clienteseleccionado)) 
-    const marcavehiculo = marcas?.marcas.filter(marcas => marcas.id === cliente[0]?.vehiculo?.marcas)
-    const modelo = modelosdata?.modelos.filter(modelos => modelos.id === cliente[0]?.vehiculo?.modelos)
+    const {componente,handleClickModalCliente,modonoche,clienteseleccionado} = useBpsystem()
+    const {clientesall,clientesloading} = useClientes()
+    const {estadosall,estadosloading }= useEstados()
+    const {marcas,isLoading} = useMarcas()
+    const {modelosdata,loadingModelos} = useModelos()
+    
+    
+
     const nombre = useRef()
     const apellido = useRef()
     const telefono = useRef()
     const email = useRef()
     const comentario = useRef()
     const estadonuevo = useRef()
-    
-    
+    if(clientesloading || estadosloading || isLoading || loadingModelos){
+        return (
+            <p>cargando informacion...</p>
+        )
+    }
+    const cliente = Object.values(clientesall?.data?.data?.filter(clientes => clientes.id == clienteseleccionado)) 
+    const marcavehiculo = marcas?.marcas.filter(marcas => marcas.id === cliente[0]?.vehiculo?.marcas)
+    const modelo = modelosdata?.modelos.filter(modelos => modelos.id === cliente[0]?.vehiculo?.modelos)
             return(
                 <>
                     <div className='lg:w-auto w-screen h-screen lg:h-full bg-opacity-20 backdrop-blur-lg flex flex-col overflow-auto mb-32 lg:mb-0 lg:p-0 pb-24 pt-40 z-50 px-3'>

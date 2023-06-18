@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState,memo} from 'react'
 import Modal from 'react-modal'
 import Aside from '../Componentes/Aside'
 import { Outlet } from 'react-router-dom'
 import useBpsystem from '../hooks/useBpsystem'
+import {useNotificaciones} from '../hooks/useNotificaciones'
 import ModalCliente from '../Componentes/ModalCliente'
 import ModalUsuario from '../Componentes/ModalUsuario'
 import { useAuth } from '../hooks/useAuth'
@@ -10,6 +11,11 @@ import { ToastContainer } from 'react-toastify'
 import ModalVehiculos from '../Componentes/ModalVehiculos'
 import CuadernoNotas from '../Componentes/CuadernoNotas'
 import LoadingPanel from '../Componentes/LoadingPanel'
+import ModalUsuariosPermisos from '../Componentes/ModalUsuariosPermisos'
+import ModalClientesCentrofinanciero from '../Componentes/ModalClientesCentrofinanciero'
+import ModalEdiccionClientesFinanciera from '../Componentes/ModalEdiccionClientesFinanciera'
+import SeguimientoModal from '../OpctionNav/Submenus/seguimiento/modales/SeguimientoModal'
+import Loading from '../Componentes/Loading'
 
 
 
@@ -51,16 +57,17 @@ export default function Panel() {
   const [permiso,setpermiso] =useState([])
   const [notificaciones,setnotificaciones] =useState(false)
   const [notas,setnotas] =useState(false)
-  const {clienteModal,usuariosModal,modonoche,setModonoche,permisos:p,loadingModelos,
-    isLoading,estadosloading,vehiculosModal,menuloading} = useBpsystem()
-    if(loadingModelos || isLoading || estadosloading || menuloading){
-      return (
-        <>
-          <LoadingPanel />
-        </>
-        );
-    }
-//  console.log(user.img)
+  const {clienteModal,usuariosModal,modonoche,setModonoche,vehiculosModal,
+    UsuariosPermisosModal,ClientesCentrofinanciero,editarclientesfinanciera,
+    seguimientoModal} = useBpsystem()
+  const {allnotificaciones,loadingnotificaciones} = useNotificaciones()
+
+  if(loadingnotificaciones){
+    return (
+      <Loading/>
+    )
+  }
+  // console.log(allnotificaciones.data)
   return (
     <>
       <div className={`${modonoche ? "bg-black text-white border-slate-800": "bg-white border-slate-200"} flex md:flex-row flex-col h-screen w-auto overflow-hidden`}>
@@ -75,65 +82,44 @@ export default function Panel() {
                           <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" />
                         </svg>
                       </div> */}
-                  <div class="relative">
+                  <div className="relative">
                         <button 
                         type="button" 
-                        class="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900" 
+                        className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900" 
                         aria-expanded="false"
                         onClick={()=>setnotificaciones(!notificaciones)}>
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" />
                           </svg>
+                          <p className='rounded-full bg-red-500 w-6 h-6 text-sm p-0 justify-center'>
+
+                          </p>
                         </button>
                         {/* menu oculto */}
                         {notificaciones? 
-                          <div class="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
-                            <div class="p-4">
+                          <div className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+                            <div className="p-4">
                               {/* notificaciones */}
-                              <div className='flex flex-row m-2 border-2 rounded-lg p-3 gap-2 bg-slate-200'>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
-                                </svg>
-                                <p>Se aprobo el credito del cliente julanito con cedula 1111111111</p>
-                              </div>
-                              <div className='flex flex-row m-2 border-2 rounded-lg p-3 gap-2 bg-slate-200'>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
-                                </svg>
-                                <p>Se aprobo el credito del cliente julanito con cedula 1111111111</p>
-                              </div>
-                              <div className='flex flex-row m-2 border-2 rounded-lg p-3 gap-2 bg-slate-200'>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
-                                </svg>
-                                <p>Se aprobo el credito del cliente julanito con cedula 1111111111</p>
-                              </div>
-
-
-                              {/* footer de modal */}
-                              {/* <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                                  <a href="#" class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
-                                    <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                      <path fill-rule="evenodd" d="M2 10a8 8 0 1116 0 8 8 0 01-16 0zm6.39-2.908a.75.75 0 01.766.027l3.5 2.25a.75.75 0 010 1.262l-3.5 2.25A.75.75 0 018 12.25v-4.5a.75.75 0 01.39-.658z" clip-rule="evenodd" />
+                              {allnotificaciones.data.map(mensajes=>
+                                  <div className='flex flex-row m-2 border-2 rounded-lg p-3 gap-2 bg-slate-200'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
                                     </svg>
-                                    Watch demo
-                                  </a>
-                                  <a href="#" class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100">
-                                    <svg class="h-5 w-5 flex-none text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                      <path fill-rule="evenodd" d="M2 3.5A1.5 1.5 0 013.5 2h1.148a1.5 1.5 0 011.465 1.175l.716 3.223a1.5 1.5 0 01-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 006.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 011.767-1.052l3.223.716A1.5 1.5 0 0118 15.352V16.5a1.5 1.5 0 01-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 012.43 8.326 13.019 13.019 0 012 5V3.5z" clip-rule="evenodd" />
-                                    </svg>
-                                    Contact sales
-                                  </a>
-                              </div> */}
+                                   <p>{mensajes['mensaje']}</p>
+                                  </div>
+                                
+                                
+                                
+                                )}
                             </div>
                           </div>
                         : ""}
                       </div>
                       {/* Notas */}
-                      <div class="relative">
+                      <div className="relative">
                         <button 
                         type="button" 
-                        class="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900" 
+                        className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900" 
                         aria-expanded="false"
                         onClick={()=>setnotas(!notas)}>
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -142,8 +128,8 @@ export default function Panel() {
                         </button>
                         {/* menu oculto */}
                         {notas? 
-                          <div class="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
-                            <div class="p-4">
+                          <div className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+                            <div className="p-4">
                               {/* cuaderno */}
                               <CuadernoNotas />
                             </div>
@@ -178,8 +164,20 @@ export default function Panel() {
           <ModalUsuario />
       </Modal>
       <ToastContainer />
-      <Modal isOpen={vehiculosModal} className={'w-full h-full grid place-items-center'}>
+      <Modal isOpen={vehiculosModal} className={'w-full h-full grid place-items-center bg-black/30'}>
           <ModalVehiculos  />
+      </Modal>
+      <Modal isOpen={UsuariosPermisosModal} className={'w-full h-full grid place-items-center bg-black/30'}>
+          <ModalUsuariosPermisos  />
+      </Modal>
+      <Modal isOpen={ClientesCentrofinanciero} className={'w-full h-full grid place-items-center bg-black/30'}>
+          <ModalClientesCentrofinanciero  />
+      </Modal>
+      <Modal isOpen={editarclientesfinanciera} className={'w-full h-full grid place-items-center bg-black/30'}>
+          <ModalEdiccionClientesFinanciera  />
+      </Modal>
+      <Modal isOpen={seguimientoModal} className={'w-full h-full grid place-items-center   bg-black/30'}>
+          <SeguimientoModal  />
       </Modal>
       <ToastContainer />
      

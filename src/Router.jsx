@@ -21,23 +21,28 @@ import Modelos from './OpctionNav/Submenus/Modelos'
 import Vehiculos from './OpctionNav/Submenus/Vehiculos'
 import Estados from './OpctionNav/Submenus/Estados'
 import ListaUsuarios from './OpctionNav/Submenus/ListaUsuarios'
+import Cartmots from './views/Cartmots'
+import Seguimientolista from './OpctionNav/Submenus/seguimiento/Seguimientolista'
+import Asesorios from './OpctionNav/Submenus/Asesorios'
 
 const router = createBrowserRouter(
     [
         {
             path:'/',
-            element: <AuthLayout />,
-            children:[
-                {
-                path:'/',
+            element: <Cartmots />
+        },
+        {
+            path:'/login',
+            element:<AuthLayout />
+            ,children:[
+            {
+                path:'/login',
                 element:<Login />
-                },
-                {
-                path:'/registro',
-                element:<Registro />
-                },
-            ]
-
+            }]
+        },
+        {
+            path:'/registro',
+            element:<Registro />
         },
         {
             path:'/panel',
@@ -48,8 +53,8 @@ const router = createBrowserRouter(
                     element: <Dashboard />
                 },
                 {
-                    path:'/panel/dashboard/vendidos',
-                    element: <Vendidos />
+                    path:'/panel/dashboard/seguimiento',
+                    element: <Seguimientolista />
                 },
                 {
                     path:'/panel/dashboard/pendientes',
@@ -86,6 +91,10 @@ const router = createBrowserRouter(
                 {
                     path:'/panel/ajustes/vehiculos',
                     element: <Vehiculos/>
+                },
+                {
+                    path:'/panel/ajustes/asesorios',
+                    element: <Asesorios/>
                 },
                 {
                     path:'/panel/ajustes/estados',

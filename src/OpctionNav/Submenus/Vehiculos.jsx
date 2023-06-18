@@ -1,6 +1,11 @@
-import { useRef,useState } from 'react'
+import { useState,useRef } from 'react'
 import useBpsystem from '../../hooks/useBpsystem'
+import {useVehiculos } from '../../hooks/useVehiculos'
+import {useMarcas} from '../../hooks/useMarcas'
+import {useModelos} from '../../hooks/useModelos'
+import {useEstados} from '../../hooks/useEstados'
 import { toast } from 'react-toastify'
+import Loading from '../../Componentes/Loading'
 
 
 
@@ -12,12 +17,21 @@ const initialValues =
 
 }
 export default function Vehiculos() {
+
+
   //captura de ARCHIVOS---------------------------------------------
   const [fotoone,setFotoone] = useState(initialValues)
   const [fototo,setFototo] = useState(initialValues)
   const [fototree,setFotree] = useState(initialValues)
   const [fotofor,setFofor] = useState(initialValues)
   const [fotoperitaje,setPeritaje] = useState(initialValues)
+
+  const {modonoche} = useBpsystem()
+  const {marcas,isLoading} = useMarcas()
+  const {modelosdata,loadingModelos} = useModelos()
+  const {estadosall,estadosloading} = useEstados()
+  const {createVehiculos} = useVehiculos()
+
 //captura de inputs---------------------------------------------------
   const placa = useRef('')
   const kilometraje = useRef('')
@@ -27,7 +41,12 @@ export default function Vehiculos() {
   const estado= useRef('')
   const valor= useRef('')
 //---------------------------------------------------------------------
-  const {modonoche,marcas,modelosdata,estadosall,createVehiculos} = useBpsystem()
+
+if (isLoading || loadingModelos || estadosloading){
+  return (
+    <Loading />
+  )
+}
 //asignacion de archivos-------------------------------------------
 const foto1 = (e) => 
   {
@@ -116,7 +135,7 @@ const peritaje = (e) =>
                   sm:text-sm sm:leading-6 text-center`}>
                     <option defaultValue="" selected>--Seleccione--</option>
                     {marcas.marcas.map(row=>(
-                      <option defaultValue={row['id']}>{row['nombre']}</option>
+                      <option value={row['id']}>{row['nombre']}</option>
                     ))}
                 </select>
                 <label htmlFor="">Modelo</label>
@@ -127,7 +146,7 @@ const peritaje = (e) =>
                   sm:text-sm sm:leading-6 text-center`}>
                     <option defaultValue="" selected>--Seleccione--</option>
                     {modelosdata.modelos.map(row=>(
-                      <option defaultValue={row['id']}>{row['year']}</option>
+                      <option value={row['id']}>{row['year']}</option>
                     ))}
                 </select>
                 <label htmlFor="">Estados</label>
@@ -138,7 +157,7 @@ const peritaje = (e) =>
                   sm:text-sm sm:leading-6 text-center`}>
                     <option defaultValue="" selected>--Seleccione--</option>
                     {estadosall.estados.map(row=>(
-                      <option defaultValue={row['id']}>{row['estado']}</option>
+                      <option value={row['id']}>{row['estado']}</option>
 
                     ))}
                     
